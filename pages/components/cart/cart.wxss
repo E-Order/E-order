@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  height: 100%;
+  background-color: #F2f2f2;
+  color: #939393;
+}
+.image-cart {
+  position: relative;
+  padding-left: 100px;
+  align-items: center;/*垂直居中*/
+  justify-content: center;/*水平居中*/
+}
+.container .cart-image {
+  width: 120px;
+  height: 120px;
+}
+.shoplist {
+  background-color: #fff;
+}
+.sample-view {
+  padding: 1rem;
+  border-bottom:1px solid #ddd;
+  display: flex;
+}
+.title {
+   position: relative;
+   padding-left: 10px;
+}
+.price {
+  position: relative;
+  padding-left: 20px;
+}
+.check {
+  position: relative;
+  padding-top: 10px;
+  padding-left: 235px;
+}

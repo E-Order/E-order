@@ -1,0 +1,40 @@
+//app.js
+App({
+  onLaunch: function () {
+    // 展示本地存储能力
+    // 调取API从本地缓存中获取数据
+    console.log('App Launch')
+    var logs = wx.getStorageSync('logs') || []
+    logs.unshift(Date.now())
+    wx.setStorageSync('logs', logs)
+  },
+   onShow: function () {
+     console.log('onShow')
+   },
+
+   onHide: function () {
+    console.log('onHide')
+   },
+
+   getUserInfo: function(cb) {
+     var that = this;
+     if (this.globalData.userInfo) {
+       typeof cd == "function" && cb(this.globalData.userInfo)
+     } else {
+       // 调用登录接口
+       wx.login({
+         success: function() {
+           wx.getUserInfo({
+             success: function(res) {
+               that.globalData.userInfo = res.userInfo;
+               typeof cb == "function" && cb(that.globalData.userInfo)
+             }
+           })
+         }
+       })
+     }
+   },
+  globalData: {
+    userInfo: null
+  }
+})

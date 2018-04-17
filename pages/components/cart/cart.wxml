@@ -1,0 +1,21 @@
+<view class="container">
+  <view class="image-cart" wx:if="{{condition}}">
+    <image src="{{cartImg}}" class="cart-image"/>
+    <view>{{tipWords}}</view>
+  </view>
+  <view wx:else>
+   <view class="shoplist-check">
+    <view class="shoplist">
+     <block wx:for="{{dishes}}">
+      <view class="sample-view">
+        <text class="title">{{item.name}}</text>
+        <p class="price">￥{{item.price}}</p>
+      </view>
+     </block>
+    </view>
+    <view class="check">
+     <button type="primary" size="mini" bindtap="gocheck">去支付</button>
+    </view>
+   </view>
+  </view>
+</view>

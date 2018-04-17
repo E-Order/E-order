@@ -1,0 +1,41 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/components/cart/cart",
+    "pages/components/myInfo/myInfo"
+  ],
+  "window": {
+    "backgroundTextStyle": "white",
+    "navigationBarBackgroundColor": "#292929",
+    "navigationBarTitleText": "E-order",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F2f2f2",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#6e6d6b",
+    "selectedColor": "#f9f027",
+    "borderStyle": "white",
+    "backgroundColor": "#292929",
+    "list": [{
+      "pagePath": "pages/index/index",
+      "iconPath": "images/footer-icon-order.png",
+      "selectedIconPath": "images/footer-icon-order-active.png",
+      "text": "点餐"
+    },
+    {
+      "pagePath": "pages/components/cart/cart",
+      "iconPath": "images/footer-icon-cart.png",
+      "selectedIconPath": "images/footer-icon-cart-active.png",
+      "text": "购物车"
+    },
+    {
+      "pagePath": "pages/components/myInfo/myInfo",
+      "iconPath": "images/footer-icon-my.png",
+      "selectedIconPath": "images/footer-icon-my-active.png",
+      "text": "我的"
+    }
+    ]
+  },
+  "debug": true
+}

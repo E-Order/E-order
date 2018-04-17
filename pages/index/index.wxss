@@ -1,0 +1,63 @@
+/**index.wxss**/
+page{
+  background: #f5f5f5;
+}
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  color: #939393;
+   flex-direction:row;
+   display:flex;
+}
+.my-swiper {
+  background-color: #fff;
+}
+.my-swiper image{
+  width: 100%;
+  height: 100px;
+}
+.nav_left{
+  width: 25%;
+  height: 100%;
+  background: #f5f5f5;
+  text-align: center;
+  flex-direction:column;
+  display:flex;
+}
+.nav_left .nav_left_items{
+  height: 30px;
+  line-height: 30px;
+  padding: 6px 0;
+  border-bottom: 1px solid #dedede;
+  font-size: 14px;
+}
+.nav_left .nav_left_items.active{
+  background: #fff;
+}
+.nav_right {
+  flex: 1;
+}
+.sample-item {
+  flex: 1;
+}
+.dish{
+  display: flex;
+  flex-direction: row;
+	margin-left: 1rem;
+	padding: 1rem;
+	border-bottom: 1px solid #ddd;
+}
+.dish .title{
+	display: block;
+	font-size: 1rem;
+}
+.dish p{
+	color: orange;
+	font-size: .75rem;
+}
+.dish .add{
+	width: 3rem;
+	text-align: right;
+}

@@ -1,0 +1,37 @@
+<!--index.wxml-->
+<view class="mainpage">
+  <view class="my-swiper">
+    <swiper indicator-dots="{{indicatorDots}}"
+    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{imgUrls}}">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" height="150"></image>
+      </swiper-item>
+    </block>
+    </swiper>
+  </view>
+  <view class="container">
+    <view class="nav_left" >
+      <block wx:for="{{navLeftItems}}">
+        <view class="nav_left_items {{curNav == item.id ? 'active' : ''}}" bindtap="switchRightTab" data-index="{{index}}" data-id="{{item.id}}">{{item.name}}
+         </view>
+      </block>
+    </view>
+    <view class="nav_right">
+      <block wx:for="{{navRightItems[curIndex]}}">
+      <!--这里注意data-dish不能有大写字母-->
+       <view class="dish"catchtap="selectedDish" data-dish="{{item.id}}">
+         <!--第二次迭代会放上图片-->
+          <view class="sample-item">
+            <text class="title">{{item.name}}</text>
+            <p>￥{{item.price}}</p>
+          </view>
+          <!--第二次迭代会将选中改为可以增加数量-->
+          <view class="add">
+            <icon type="{{item.status ? 'success' : 'circle'}}" color="orange" size="30"/>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>
