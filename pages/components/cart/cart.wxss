@@ -1,37 +1,83 @@
 .container {
-  display: flex;
+  background-color: #939393;
   height: 100%;
-  background-color: #F2f2f2;
-  color: #939393;
+  width: 100%
 }
-.image-cart {
-  position: relative;
-  padding-left: 100px;
-  align-items: center;/*垂直居中*/
-  justify-content: center;/*水平居中*/
-}
-.container .cart-image {
+.cart-image {
+  position: absolute;
   width: 120px;
   height: 120px;
+  margin-top: 50px;
+  margin-left: 100px;
 }
-.shoplist {
+.cart {
   background-color: #fff;
 }
-.sample-view {
+.tipwords {
+  position: absolute;
+  color: #939393;
+  margin-left: 110px;
+  margin-top: 180px;
+}
+.dish{
   padding: 1rem;
-  border-bottom:1px solid #ddd;
-  display: flex;
+	border-radius: 6%; 
+  height: 70px;
+  box-shadow: 6rpx 23rpx 20rpx 10rpx #ccc; 
 }
-.title {
-   position: relative;
-   padding-left: 10px;
+.image-style{
+  border-radius: 30%; 
+  box-shadow: 6rpx 23rpx 20rpx 10rpx #ccc; 
+  height: 60px;
+  width: 60px;
+  padding: 1px;
 }
-.price {
-  position: relative;
-  padding-left: 20px;
+.text-and-add{
+  display: felx;
+  flex-direction: column;
+  height: 100%;
 }
-.check {
-  position: relative;
-  padding-top: 10px;
-  padding-left: 235px;
+.text-style{
+  display: block;
+  position: absolute;
+  margin-left: -120px;
+  margin-top: 5px;
+  width: 130px;
+  color:#000000;
 }
+.price-style{
+  display: block;
+  position: absolute;
+  margin-left: -45px;
+  margin-top: 28px;
+  color:#000000;
+}
+.image-add {
+  position: absolute;
+  margin-top: 50px;
+  margin-left: -30px;
+  height: 30px;
+  width: 30px;
+}
+.num {
+  position: absolute;
+  margin-top: 55px;
+  margin-left: -50px;
+  height: 30px;
+  width: 30px;
+  color: #939393
+}
+.image-sub {
+  position: absolute;
+  margin-top: 50px;
+  margin-left: -90px;
+  height: 30px;
+  width: 30px;
+}
+.total {
+  margin-top: 20px;
+  margin-left: 120px;
+  width: 100px;
+  height: 40px;
+}
+

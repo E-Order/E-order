@@ -1,30 +1,21 @@
-/**index.wxss**/
 page{
-  background: #f5f5f5;
+  background: #f5f5f5
 }
 .container {
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: #fff;
-  color: #939393;
-   flex-direction:row;
-   display:flex;
+  background: #fff;
+  color: #939393
 }
-.my-swiper {
-  background-color: #fff;
-}
-.my-swiper image{
-  width: 100%;
-  height: 100px;
-}
-.nav_left{
+.nav_left {
   width: 25%;
+  flex-flow: 0;
+  flex-shrink: 0;
   height: 100%;
-  background: #f5f5f5;
+  background-color: #f5f5f5;
+  color:#000000;
   text-align: center;
-  flex-direction:column;
-  display:flex;
 }
 .nav_left .nav_left_items{
   height: 30px;
@@ -39,25 +30,57 @@ page{
 .nav_right {
   flex: 1;
 }
-.sample-item {
-  flex: 1;
-}
 .dish{
-  display: flex;
-  flex-direction: row;
-	margin-left: 1rem;
-	padding: 1rem;
-	border-bottom: 1px solid #ddd;
+  padding: 1rem;
+	border-radius: 6%; 
+  height: 70px;
+  box-shadow: 6rpx 23rpx 20rpx 10rpx #ccc; 
 }
-.dish .title{
-	display: block;
-	font-size: 1rem;
+.image-style{
+  border-radius: 30%; 
+  box-shadow: 6rpx 23rpx 20rpx 10rpx #ccc; 
+  height: 60px;
+  width: 60px;
+  padding: 1px;
 }
-.dish p{
-	color: orange;
-	font-size: .75rem;
+.text-and-add{
+  display: felx;
+  flex-direction: column;
+  height: 100%;
 }
-.dish .add{
-	width: 3rem;
-	text-align: right;
+.text-style{
+  display: block;
+  position: absolute;
+  margin-left: -120px;
+  margin-top: 5px;
+  width: 130px;
+  color:#000000;
+}
+.price-style{
+  display: block;
+  position: absolute;
+  margin-left: -45px;
+  margin-top: 28px;
+  color:#000000;
+}
+.image-add {
+  position: absolute;
+  margin-top: 50px;
+  margin-left: -30px;
+  height: 30px;
+  width: 30px;
+}
+.num {
+  position: absolute;
+  margin-top: 55px;
+  margin-left: -50px;
+  height: 30px;
+  width: 30px;
+}
+.image-sub {
+  position: absolute;
+  margin-top: 50px;
+  margin-left: -90px;
+  height: 30px;
+  width: 30px;
 }

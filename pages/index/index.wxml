@@ -1,37 +1,42 @@
 <!--index.wxml-->
-<view class="mainpage">
+<view class="container flex-wrap flex-direction-col">
   <view class="my-swiper">
     <swiper indicator-dots="{{indicatorDots}}"
     autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-    <block wx:for="{{imgUrls}}">
+    <block wx:for="{{imgUrls.foods}}">
       <swiper-item>
-        <image src="{{item}}" class="slide-image" height="150"></image>
+        <image src="{{item.icon}}" class="slide-image" height="150"></image>
       </swiper-item>
     </block>
     </swiper>
   </view>
-  <view class="container">
-    <view class="nav_left" >
+  <view class="flex-wrap flex-direction-row">
+    <view class="nav_left">
       <block wx:for="{{navLeftItems}}">
-        <view class="nav_left_items {{curNav == item.id ? 'active' : ''}}" bindtap="switchRightTab" data-index="{{index}}" data-id="{{item.id}}">{{item.name}}
-         </view>
+        <view class="nav_left_items {{curNav == item.type ? 'active' : ''}}" bindtap="choosefoodtype" data-type="{{item.type}}" data-index="{{index}}">{{item.name}}</view>
       </block>
     </view>
     <view class="nav_right">
-      <block wx:for="{{navRightItems[curIndex]}}">
-      <!--这里注意data-dish不能有大写字母-->
-       <view class="dish"catchtap="selectedDish" data-dish="{{item.id}}">
-         <!--第二次迭代会放上图片-->
-          <view class="sample-item">
-            <text class="title">{{item.name}}</text>
-            <p>￥{{item.price}}</p>
-          </view>
-          <!--第二次迭代会将选中改为可以增加数量-->
-          <view class="add">
-            <icon type="{{item.status ? 'success' : 'circle'}}" color="orange" size="30"/>
+      <block wx:for="{{navLeftItems[curIndex].foods}}">
+        <view class="dish flex-wrap flex-direction-row" bindtap="selectproduct">
+          <image class="image-style" src="{{item.icon}}" mode="aspectFill"></image>
+          <view class="text-and-add">
+            <view class="text-style"> <text>{{item.name}}</text></view>
+            <view class="price-style"><text>￥{{item.price}}</text></view>
+            <view wx:if="{{condition[curIndex][index]}}" >
+              <image class="image-add" src="../../images/footer-icon-cart-active.png" catchtap="add_to_cart" data-colindex="{{index}}"></image>
+            </view>
+            <view wx:if="{{!condition[curIndex][index]}}">
+              <image class="image-add" src="../../images/+.png" catchtap="addfood" data-colindex="{{index}}"></image>
+              <text class="num">{{foodnum[curIndex][index]}}</text>
+              <image class="image-sub" src="../../images/-.png" catchtap="subfood" data-colindex="{{index}}"></image>
+            </view>
           </view>
         </view>
       </block>
     </view>
   </view>
+  <loading hidden="{{loadingHidden}}">
+        加载中...
+  </loading>
 </view>

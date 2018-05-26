@@ -4,108 +4,159 @@ const app = getApp()
 
 Page({
   data: {
-    imgUrls: [
-      'https://raw.githubusercontent.com/LTimmy/markdownPhotos/master/E-order2.png',
-      'https://raw.githubusercontent.com/LTimmy/markdownPhotos/master/E-order3.png'
-    ],
     // 关于滑动图片的动画，后期可以循环热销菜品等等
     indicatorDots: true,
     autoplay: true,
     interval: 3000,
     duration: 1000,
-    carNav:1,  // 当前选中的导航，热销，小炒等
-    curIndex:0,  // 当前的下标，用于根据左边导航变换右边的view的list
-    // 导航分类
-    navLeftItems: [
-      {
-        id:1,
-        name:"热销"
-    },
-    {
-      id:2,
-      name:"小炒"
-    },
-    {
-      id:3,
-      name:"主食"
-    },
-    {
-      id:4,
-      name:"汤类"
-    },
-    {
-      id:5,
-      name:"饮料"
-    },
-    {
-      id:6,
-      name:"套餐"
-    }
-    ],
-    // 右边的菜品分类，有几个导航就应该有几个分类
-    navRightItems: [
-      [{
-        name: "土豆肉丝盖浇饭",
-        price: 15,
-        num: 1,
-        id: 1
+    // 左右导航栏
+    navLeftItems:[],
+    curNav:1,
+    curIndex:0,
+    condition:[],
+    foodnum:[],
+  },
+  onLoad: function() {
+    var that = this
+    wx.request({
+      url:'https://private-d2cad-ordermeal.apiary-mock.com/sell/buyer/product/list',
+      method: 'GET',
+      data: {},
+      header: {
+        'Content-Type': 'application/json'
       },
-      {
-        name: "蘑菇芝士汤",
-        price: 15,
-        num: 1,
-        id: 2
-      }],
-      [],
-      [],
-      [],
-      [],
-      []
-    ]
-  },
-  loadingChange() {
-    setTimeout(() => {
-      this.setData({
-        hidden: true
-      })
-    }, 2000)
-  },
-  // 点击左边分类栏的响应事件
-  switchRightTab: function(e) {
-    let id = e.target.dataset.id, // 获取点击的导航的id
-      index = parseInt(e.target.dataset.index);  // 获取点击的导航的下标
-    this.setData({
-      curNav: id,
-      curIndex: index
+      success: function(res) {
+        console.log(res.data.data)
+        that.setData({
+          imgUrls: res.data.data[0],
+          navLeftItems: res.data.data
+        })
+        setTimeout(function () {
+          that.setData({
+            loadingHidden: true
+          })
+        }, 1500)
+        var array_num = new Array()
+        var array_condition = new Array()
+        var len1 = res.data.data.length
+        for (var i = 0; i < len1; i++) {
+          array_num[i] = new Array();
+          array_condition[i] = new Array();
+          var len2 = res.data.data[i].foods.length
+          for (var j = 0; j < len2; j++) {
+            array_num[i][j] = 0;
+            array_condition[i][j] = true;
+          }
+        }
+        that.setData({
+          condition: array_condition,
+          foodnum: array_num,
+        })
+      }
     })
   },
-  // 点击菜品事件响应函数
-  selectedDish (e) {
-    // dish：每一个菜品的id
-    let dish = e.currentTarget.dataset.dish;
-    // 这里应该做一些事情将菜品加到购物车,向购物车界面传递信息
-  
-    // 用于改变选择了菜品后view的状态
-    //console.log(dish)
-    this.setStatus(dish);
+
+  // 事件处理函数
+  choosefoodtype: function(e) {
+    let type = e.target.dataset.type,
+    index = parseInt(e.target.dataset.index);
+    this.setData({
+      curNav:type,
+      curIndex:index
+    })
   },
-  setStatus(dishId) {
-    let dishes = this.data.navRightItems;
-    for (let dish of dishes) {
-      dish.forEach((item) => {
-        //console.log(item.id)
-        //console.log(dishId)
-        if (item.id == dishId) {
-          item.status = !item.status || false
-        }
-      })
+  selectproduct:function(e) {
+    
+  },
+  add_to_cart:function(e) {
+    var that = this;
+    let row = this.data.curIndex;
+    let col = parseInt(e.target.dataset.colindex);
+    console.log(row, col);
+    var array_num = new Array();
+    var array_condition = new Array();
+    let len1 = this.data.condition.length;
+    for (var i = 0; i < len1; i++) {
+      array_num[i] = new Array();
+      array_condition[i] = new Array();
+      var len2 = this.data.condition[i].length
+      for (var j = 0; j < len2; j++) {
+        array_num[i][j] = this.data.foodnum[i][j];
+        array_condition[i][j] = this.data.condition[i][j];
+      }
+    }
+    array_num[row][col] = 1;
+    array_condition[row][col] = false;
+    
+    console.log(array_num);
+    console.log(array_condition);
+    that.setData({
+      condition: array_condition,
+      foodnum: array_num,
+    })
+  },
+  addfood: function (e){
+    var that = this;
+    let row = this.data.curIndex;
+    let col = parseInt(e.target.dataset.colindex);
+    console.log(row, col);
+    var array_num = new Array();
+    let len1 = this.data.foodnum.length;
+    for (var i = 0; i < len1; i++) {
+      array_num[i] = new Array();
+      var len2 = this.data.foodnum[i].length
+      for (var j = 0; j < len2; j++) {
+        array_num[i][j] = this.data.foodnum[i][j];
+      }
+    }
+    array_num[row][col]++;
+    that.setData({
+      foodnum: array_num,
+    })
+  },
+  subfood: function (e) {
+    var that = this;
+    let row = this.data.curIndex;
+    let col = parseInt(e.target.dataset.colindex);
+    console.log(row, col);
+    var array_num = new Array();
+    var array_condition = new Array();
+    let len1 = this.data.condition.length;
+    for (var i = 0; i < len1; i++) {
+      array_num[i] = new Array();
+      array_condition[i] = new Array();
+      var len2 = this.data.condition[i].length
+      for (var j = 0; j < len2; j++) {
+        array_num[i][j] = this.data.foodnum[i][j];
+        array_condition[i][j] = this.data.condition[i][j];
+      }
+    }
+    if (array_num[row][col] > 0) {
+      array_num[row][col]--;
+    }
+    if (array_num[row][col] == 0) {
+      array_condition[row][col] = true;
     }
 
-    this.setData({
-      navRightItems: this.data.navRightItems
+    console.log(array_num);
+    console.log(array_condition);
+    that.setData({
+      condition: array_condition,
+      foodnum: array_num,
     })
   },
-  onLoad: function () {
-    this.loadingChange()
-  },
+  onHide:function() {
+    wx.setStorage({
+      key: 'navLeftItems',
+      data: this.data.navLeftItems,
+    })
+    wx.setStorage({
+      key: 'foodnum',
+      data: this.data.foodnum,
+    })
+    wx.setStorage({
+      key: 'curIndex',
+      data: this.data.curIndex,
+    })
+  }
 })

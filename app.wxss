@@ -1,12 +1,20 @@
 /**app.wxss**/
 .container {
+    height: 100%;
+    width: 100%;
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     box-sizing: border-box;
 }
-
+.flex-wrap{
+  display: flex;
+  justify-content: space-between;
+}
+.flex-wrap.flex-direction-col{
+	flex-direction: column;
+}
+.flex-wrap.flex-direction-row{
+	flex-direction: row;
+}
 page {
     background-color: #F2f2f2;
 }
