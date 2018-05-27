@@ -5,13 +5,10 @@ Page({
     cartImg: '/images/cart-null.png',
     tipWords: '购物车空空如也',
     condition:true,
-    foodnum:[],
-    cartfood:[],
-    cartfoodnum:[]
-  },
-  gocheck:function() {
-    // 计算购物车总价格，跳转到支付页面
-
+    foodnum:[],  // 二维数组，每种食物类别的每种食物的数量，应该与index界面中的相同，
+    //但是我这里购物车中增加时没有更新它所以现在会有购物车界面与index界面不同步的bug
+    cartfood:[],  // 从index界面获取到数据后，如果食物数量不为0的话，填充到cartfood中
+    cartfoodnum:[]  // 每个cartfood中的食物对应的数量
   },
   onLoad: function() {
     
@@ -21,6 +18,7 @@ Page({
     var tempfoodnum = new Array();
     var foodincart = new Array();
     var foodnumincart = new Array();
+    //从index界面获取数据，并填充cartfood，同样赋值时很麻烦，希望能解决
     wx.getStorage({
       key: 'foodnum',
       success: function (res) {
@@ -68,6 +66,8 @@ Page({
     console.log("foodincart", foodincart)
     console.log("foodnumincart", foodnumincart)
   },
+  // 这里应该同时更改foodnum，我没有实现，有点麻烦，因为要知道食物的类别，可以修改api
+  //给food添加一个type，或者根据食物的id的第一位来判断，我把食物id的第一位设为了与type相同的值
   addfood: function (e) {
     var that = this;
     let col = parseInt(e.target.dataset.colindex);
@@ -81,6 +81,7 @@ Page({
       cartfoodnum: array_num,
     })
   },
+  // 这里应该同时更改foodnum，我没有实现
   subfood: function (e) {
     var that = this;
     let col = parseInt(e.target.dataset.colindex);

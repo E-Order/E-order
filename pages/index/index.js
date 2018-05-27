@@ -9,13 +9,14 @@ Page({
     autoplay: true,
     interval: 3000,
     duration: 1000,
-    // 左右导航栏
-    navLeftItems:[],
-    curNav:1,
-    curIndex:0,
-    condition:[],
-    foodnum:[],
+    
+    navLeftItems:[], // api中所有的data数据，建议编码时同时打开api网站
+    curNav:1,  // 当前导航栏
+    curIndex:0,  // 当前导航栏对应的index
+    condition:[],  // 用于判断购物车图片是否变化,二维数组，对应着data类别中的某个食物
+    foodnum:[],   // 存储每个食物的数量，二维数组，分别对应data类别中的某个食物的数量
   },
+  // onload函数，从api获得数据，但是我觉得应该把里面所有的函数都改到onshow中去
   onLoad: function() {
     var that = this
     wx.request({
@@ -28,7 +29,7 @@ Page({
       success: function(res) {
         console.log(res.data.data)
         that.setData({
-          imgUrls: res.data.data[0],
+          imgUrls: res.data.data[0],  // 滑动图片来源于热榜
           navLeftItems: res.data.data
         })
         setTimeout(function () {
@@ -36,6 +37,7 @@ Page({
             loadingHidden: true
           })
         }, 1500)
+        // 初始化condition和foodnum，这种初始化很麻烦，需要一个一个的复制，希望可以解决
         var array_num = new Array()
         var array_condition = new Array()
         var len1 = res.data.data.length
@@ -56,7 +58,7 @@ Page({
     })
   },
 
-  // 事件处理函数
+  // 选择导航栏食物类别，index来源于wxml
   choosefoodtype: function(e) {
     let type = e.target.dataset.type,
     index = parseInt(e.target.dataset.index);
@@ -65,14 +67,18 @@ Page({
       curIndex:index
     })
   },
+  // 点击食物，跳转到食物详情界面，食物详情界面还没有画，但是已经建好了文件夹
+  //，可以实现跳转到空白页面，并传递食物的所有数据
   selectproduct:function(e) {
     
   },
+  // 添加购物车，购物车图片变为加减号
   add_to_cart:function(e) {
     var that = this;
-    let row = this.data.curIndex;
-    let col = parseInt(e.target.dataset.colindex);
+    let row = this.data.curIndex;  // 食物类别下标
+    let col = parseInt(e.target.dataset.colindex); // 食物类别中的具体点击的食物下标
     console.log(row, col);
+    // 更新 condition与foodnum，很麻烦，要一个一个的赋值，希望找到简单的更新方法
     var array_num = new Array();
     var array_condition = new Array();
     let len1 = this.data.condition.length;
@@ -95,6 +101,7 @@ Page({
       foodnum: array_num,
     })
   },
+  // 内容同上个函数差不多
   addfood: function (e){
     var that = this;
     let row = this.data.curIndex;
@@ -114,6 +121,7 @@ Page({
       foodnum: array_num,
     })
   },
+  // 内容同上个函数，差不多，但是要判断是否减为0，减为0时，要变为购物车图标
   subfood: function (e) {
     var that = this;
     let row = this.data.curIndex;
@@ -145,6 +153,8 @@ Page({
       foodnum: array_num,
     })
   },
+  // 我选择在onhide时进行数据传递，数据传递的方式是通过本地的存储，传递的数据是foodnum，
+  //整个数据库的data，以及当前的导航栏
   onHide:function() {
     wx.setStorage({
       key: 'navLeftItems',
