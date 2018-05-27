@@ -13,7 +13,6 @@ Page({
     navLeftItems:[], // api中所有的data数据，建议编码时同时打开api网站
     curNav:1,  // 当前导航栏
     curIndex:0,  // 当前导航栏对应的index
-    condition:[],  // 用于判断购物车图片是否变化,二维数组，对应着data类别中的某个食物
     foodnum:[],   // 存储每个食物的数量，二维数组，分别对应data类别中的某个食物的数量
   },
   // onload函数，从api获得数据，但是我觉得应该把里面所有的函数都改到onshow中去
@@ -37,21 +36,17 @@ Page({
             loadingHidden: true
           })
         }, 1500)
-        // 初始化condition和foodnum，这种初始化很麻烦，需要一个一个的复制，希望可以解决
+        // 初始化foodnum，这种初始化很麻烦，需要一个一个的复制，希望可以解决
         var array_num = new Array()
-        var array_condition = new Array()
         var len1 = res.data.data.length
         for (var i = 0; i < len1; i++) {
           array_num[i] = new Array();
-          array_condition[i] = new Array();
           var len2 = res.data.data[i].foods.length
           for (var j = 0; j < len2; j++) {
             array_num[i][j] = 0;
-            array_condition[i][j] = true;
           }
         }
         that.setData({
-          condition: array_condition,
           foodnum: array_num,
         })
       }
@@ -78,26 +73,20 @@ Page({
     let row = this.data.curIndex;  // 食物类别下标
     let col = parseInt(e.target.dataset.colindex); // 食物类别中的具体点击的食物下标
     console.log(row, col);
-    // 更新 condition与foodnum，很麻烦，要一个一个的赋值，希望找到简单的更新方法
+    // 更新 foodnum，很麻烦，要一个一个的赋值，希望找到简单的更新方法
     var array_num = new Array();
-    var array_condition = new Array();
-    let len1 = this.data.condition.length;
+  
+    let len1 = this.data.foodnum.length;
     for (var i = 0; i < len1; i++) {
       array_num[i] = new Array();
-      array_condition[i] = new Array();
-      var len2 = this.data.condition[i].length
+      var len2 = this.data.foodnum[i].length
       for (var j = 0; j < len2; j++) {
         array_num[i][j] = this.data.foodnum[i][j];
-        array_condition[i][j] = this.data.condition[i][j];
       }
     }
     array_num[row][col] = 1;
-    array_condition[row][col] = false;
-    
     console.log(array_num);
-    console.log(array_condition);
     that.setData({
-      condition: array_condition,
       foodnum: array_num,
     })
   },
@@ -128,28 +117,21 @@ Page({
     let col = parseInt(e.target.dataset.colindex);
     console.log(row, col);
     var array_num = new Array();
-    var array_condition = new Array();
-    let len1 = this.data.condition.length;
+    let len1 = this.data.foodnum.length;
     for (var i = 0; i < len1; i++) {
       array_num[i] = new Array();
-      array_condition[i] = new Array();
-      var len2 = this.data.condition[i].length
+      var len2 = this.data.foodnum[i].length
       for (var j = 0; j < len2; j++) {
         array_num[i][j] = this.data.foodnum[i][j];
-        array_condition[i][j] = this.data.condition[i][j];
       }
     }
     if (array_num[row][col] > 0) {
       array_num[row][col]--;
     }
-    if (array_num[row][col] == 0) {
-      array_condition[row][col] = true;
-    }
 
     console.log(array_num);
-    console.log(array_condition);
+  
     that.setData({
-      condition: array_condition,
       foodnum: array_num,
     })
   },
@@ -164,16 +146,14 @@ Page({
       key: 'foodnum',
       data: this.data.foodnum,
     })
-    wx.setStorage({
-      key: 'curIndex',
-      data: this.data.curIndex,
-    })
+    
   },
   onShow:function() {
     var that = this
      wx.getStorage({
       key: 'foodnum',
       success: function (res) {
+        console.log("foodnuminindex",res.data)
         that.setData({
           foodnum: res.data,
         })

@@ -26,11 +26,11 @@
           <view class="text-and-add">
             <view class="text-style"> <text>{{item.name}}</text></view>
             <view class="price-style"><text>￥{{item.price}}</text></view>
-            <view wx:if="{{condition[curIndex][index]}}" >
+            <view wx:if="{{foodnum[curIndex][index]==0}}" >
                <!--add_to_cart用于实现购物车图标变为加减号，注意catch与bind的区别-->
               <image class="image-add" src="../../images/footer-icon-cart-active.png" catchtap="add_to_cart" data-colindex="{{index}}"></image>
             </view>
-            <view wx:if="{{!condition[curIndex][index]}}">
+            <view wx:if="{{foodnum[curIndex][index]!=0}}">
               <!--addfood用于实现增加数量-->
               <image class="image-add" src="../../images/+.png" catchtap="addfood" data-colindex="{{index}}"></image>
               <text class="num">{{foodnum[curIndex][index]}}</text>

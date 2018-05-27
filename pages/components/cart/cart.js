@@ -33,12 +33,19 @@ Page({
       key: 'navLeftItems',
       success: function (res) {
         let len1 = res.data.length;
+        for (var i = 0; i < len1; i++) {
+          let len2 = res.data[i].foods.length;
+          for (var j = 0; j < len2; j++)
+            that.data.foodnum[i][j] = 0;
+        }
+        
         for (var k = 0; k < kind; k++) {
           for (var i = 0; i < len1; i++) {
             let len2 = res.data[i].foods.length;
             for (var j = 0; j < len2; j++)
-              if (that.data.cartfood[k].id == res.data[i].foods[j].id)
+              if (that.data.cartfood[k].id == res.data[i].foods[j].id) {
                 that.data.foodnum[i][j] = that.data.cartfoodnum[k];
+              }
           }
         }
       }
@@ -106,6 +113,9 @@ Page({
   },
 
   onHide:function() {
+    
+    //this.updateFoodnum()
+    console.log("foonumincart", this.data.foodnum)
     wx.setStorage({
       key: 'foodnum',
       data: this.data.foodnum,
@@ -126,6 +136,8 @@ Page({
     that.setData({
       cartfoodnum: array_num,
     })
+    console.log("array_numincart",array_num)
+    console.log("addfoodnum", this.data.foodnum)
     this.updateFoodnum();
     this.calTotal()
   },
@@ -138,14 +150,20 @@ Page({
     let len1 = this.data.cartfoodnum.length;
     var index = 0;
     for (var i = 0; i < len1; i++) {
-      array_num[i] = this.data.cartfoodnum[i];
-      if (i == col && array_num[col] > 0) {
-        array_num[col]--;
+      var temp = this.data.cartfoodnum[i];
+      if (i == col) {
+       temp--;
       }
-      if (array_num[i] != 0) {
+      if (temp != 0) {
         arrayfood[index] = this.data.cartfood[i];
+        array_num[index] = temp;
         index++;
-      }
+      } 
+    }
+    if (arrayfood.length == 0) {
+      that.setData({
+        condition:true
+      })
     }
     that.setData({
       cartfoodnum: array_num,

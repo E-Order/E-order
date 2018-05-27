@@ -79,7 +79,6 @@
   flex-direction: row;
   position: fixed;
   bottom: 0;
-  background:#FFFFFF
 }
 .total {
   font-size:45rpx;
@@ -91,8 +90,8 @@
   background:#FFFF00;
   font-weight:bold;
   font-size:45rpx;
-  margin-left:2rpx;
-
+  margin-left:5rpx;
+  margin-bottom: 10rpx;
 }
 
 
