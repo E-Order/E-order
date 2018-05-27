@@ -8,11 +8,47 @@ Page({
     foodnum:[],  // 二维数组，每种食物类别的每种食物的数量，应该与index界面中的相同，
     //但是我这里购物车中增加时没有更新它所以现在会有购物车界面与index界面不同步的bug
     cartfood:[],  // 从index界面获取到数据后，如果食物数量不为0的话，填充到cartfood中
-    cartfoodnum:[]  // 每个cartfood中的食物对应的数量
+    cartfoodnum:[],  // 每个cartfood中的食物对应的数量
+    amount: '0'
   },
+
+  // 计算当前购物车下总金额
+  calTotal: function(e) {
+    var total = 0;
+    let kind = this.data.cartfood.length;
+    for (var i = 0; i < kind; i++) {
+      total += this.data.cartfood[i].price * this.data.cartfoodnum[i];
+      // console.log("total", total)
+    }
+    this.setData({
+      amount: total,
+    })
+  },
+
+  // 更改foodnum矩阵，使得能够实现与index页面的数据交互
+  updateFoodnum: function(e) {
+    let kind = this.data.cartfood.length;
+    var that = this
+    wx.getStorage({
+      key: 'navLeftItems',
+      success: function (res) {
+        let len1 = res.data.length;
+        for (var k = 0; k < kind; k++) {
+          for (var i = 0; i < len1; i++) {
+            let len2 = res.data[i].foods.length;
+            for (var j = 0; j < len2; j++)
+              if (that.data.cartfood[k].id == res.data[i].foods[j].id)
+                that.data.foodnum[i][j] = that.data.cartfoodnum[k];
+          }
+        }
+      }
+    })
+  },
+
   onLoad: function() {
     
   },
+
   onShow:function() {
     var that = this
     var tempfoodnum = new Array();
@@ -56,6 +92,7 @@ Page({
           cartfood: foodincart,
           cartfoodnum: foodnumincart
         })
+        that.calTotal()
         if (index > 0) {
           that.setData({
             condition: false
@@ -65,8 +102,17 @@ Page({
     })
     console.log("foodincart", foodincart)
     console.log("foodnumincart", foodnumincart)
+    console.log("total", this.amount)
   },
-  // 这里应该同时更改foodnum，我没有实现，有点麻烦，因为要知道食物的类别，可以修改api
+
+  onHide:function() {
+    wx.setStorage({
+      key: 'foodnum',
+      data: this.data.foodnum,
+    })
+  },
+
+
   //给food添加一个type，或者根据食物的id的第一位来判断，我把食物id的第一位设为了与type相同的值
   addfood: function (e) {
     var that = this;
@@ -80,8 +126,10 @@ Page({
     that.setData({
       cartfoodnum: array_num,
     })
+    this.updateFoodnum();
+    this.calTotal()
   },
-  // 这里应该同时更改foodnum，我没有实现
+
   subfood: function (e) {
     var that = this;
     let col = parseInt(e.target.dataset.colindex);
@@ -103,5 +151,7 @@ Page({
       cartfoodnum: array_num,
       cartfood: arrayfood
     })
+    this.updateFoodnum();
+    this.calTotal()
   }
 })

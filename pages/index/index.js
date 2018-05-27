@@ -168,5 +168,16 @@ Page({
       key: 'curIndex',
       data: this.data.curIndex,
     })
+  },
+  onShow:function() {
+    var that = this
+     wx.getStorage({
+      key: 'foodnum',
+      success: function (res) {
+        that.setData({
+          foodnum: res.data,
+        })
+      }
+    })
   }
 })

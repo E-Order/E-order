@@ -1,11 +1,14 @@
 <view class="container">
+
  <!--image-cart当购物车中没有数据时显示-->
   <view class="image-cart" wx:if="{{condition}}">
     <image src="{{cartImg}}" class="cart-image"/>
     <view class="tipwords">{{tipWords}}</view>
   </view>
+
   <!--cart当购物车中有数据时显示-->
   <view class="cart flex-wrap flex-direction-col" wx:if="{{!condition}}">
+     <!--显示已选菜品-->
      <block wx:for="{{cartfood}}">
         <!--selectproduct跳转到详情-->
         <view class="dish flex-wrap flex-direction-row" bindtap="selectproduct">
@@ -19,10 +22,13 @@
           </view>
         </view>
      </block>
-     <!--这里我没有做函数接口，你可以自己添加，主要是计算购物车总额-->
+     
+     <!--计算购物车总额-->
      <view class="total_and_pay">
-       <view class="total"><text>总额：￥100</text></view>
+       <view class="total">总额：￥{{amount}}</view>
        <button class="pay">去支付</button>
      </view>
+     
   </view>
+
 </view>
