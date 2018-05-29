@@ -2,7 +2,8 @@
   "pages":[
     "pages/index/index",
     "pages/components/cart/cart",
-    "pages/components/myInfo/myInfo"
+    "pages/components/myInfo/myInfo",
+    "pages/components/detail/detail"
   ],
   "window": {
     "backgroundTextStyle": "white",

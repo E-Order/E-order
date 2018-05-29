@@ -1,0 +1,11 @@
+<view class="container flex-direction-col">
+  <view class="image"><image src="{{food.icon}}"></image></view>
+   <view class="name_and_price flex-wrap flex-direction-row">
+    <view class="name">{{food.name}}</view>
+    <view class="price">￥{{food.price}}</view>
+   </view>
+  <view class="description">
+   <view class="des1">商品描述</view>
+   <view class="des2">{{food.description}}</view>
+  </view>
+</view>

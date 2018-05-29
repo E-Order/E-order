@@ -18,11 +18,11 @@ page{
   text-align: center;
 }
 .nav_left .nav_left_items{
-  height: 30px;
-  line-height: 30px;
-  padding: 6px 0;
-  border-bottom: 1px solid #dedede;
-  font-size: 14px;
+  height: 70.2rpx;
+  line-height: 70.2rpx;
+  padding: 14.04rpx 0;
+  border-bottom: 2.34rpx solid #dedede;
+  font-size: 32.76rpx;
 }
 .nav_left .nav_left_items.active{
   background: #fff;
@@ -33,15 +33,15 @@ page{
 .dish{
   padding: 1rem;
 	border-radius: 6%; 
-  height: 70px;
-  box-shadow: 6rpx 23rpx 20rpx 10rpx #ccc; 
+  height: 163.8rpx;
+  border-bottom: 2.34rpx solid #dedede;
 }
 .image-style{
   border-radius: 30%; 
   box-shadow: 6rpx 23rpx 20rpx 10rpx #ccc; 
-  height: 60px;
-  width: 60px;
-  padding: 1px;
+  height: 140.4rpx;
+  width: 140.4rpx;
+  padding: 2.34rpx;
 }
 .text-and-add{
   display: felx;
@@ -51,36 +51,36 @@ page{
 .text-style{
   display: block;
   position: absolute;
-  margin-left: -120px;
-  margin-top: 5px;
-  width: 130px;
+  margin-left: -280.8rpx;
+  margin-top: 11.7rpx;
+  width: 304.2rpx;
   color:#000000;
 }
 .price-style{
   display: block;
   position: absolute;
-  margin-left: -45px;
-  margin-top: 28px;
+  margin-left: -105.3rpx;
+  margin-top: 65.52rpx;
   color:#000000;
 }
 .image-add {
   position: absolute;
-  margin-top: 50px;
-  margin-left: -30px;
-  height: 30px;
-  width: 30px;
+  margin-top: 117rpx;
+  margin-left: -70.2rpx;
+  height: 70.2rpx;
+  width: 70.2rpx;
 }
 .num {
   position: absolute;
-  margin-top: 55px;
-  margin-left: -50px;
-  height: 30px;
-  width: 30px;
+  margin-top: 128.7rpx;
+  margin-left: -117rpx;
+  height: 70.2rpx;
+  width: 70.2rpx;
 }
 .image-sub {
   position: absolute;
-  margin-top: 50px;
-  margin-left: -90px;
-  height: 30px;
-  width: 30px;
+  margin-top: 117rpx;
+  margin-left: -210.6rpx;
+  height: 70.2rpx;
+  width: 70.2rpx;
 }

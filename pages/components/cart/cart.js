@@ -104,6 +104,10 @@ Page({
           that.setData({
             condition: false
           })
+        } else {
+          that.setData({
+            condition: true
+          })
         }
       }
     })

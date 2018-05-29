@@ -5,32 +5,38 @@
 }
 .cart-image {
   position: absolute;
-  width: 120px;
-  height: 120px;
-  margin-top: 50px;
-  margin-left: 100px;
+  width: 280.8rpx;
+  height: 280.8rpx;
+  margin-top: 117rpx;
+  margin-left: 234rpx;
 }
 .cart {
   background-color: #fff;
+  width: 100%;
 }
 .tipwords {
   position: absolute;
   color: #939393;
-  margin-left: 110px;
-  margin-top: 180px;
+  margin-left: 257.4rpx;
+  margin-top: 421.2rpx;
 }
 .dish{
-  padding: 1rem;
+  padding: 37.5rpx;
 	border-radius: 6%; 
-  height: 70px;
-  box-shadow: 6rpx 23rpx 20rpx 10rpx #ccc; 
+  height: 55px;
+  
+}
+.food {
+  height: 90%;
+  position: fixed;
+  background-color: #fff;
 }
 .image-style{
   border-radius: 30%; 
   box-shadow: 6rpx 23rpx 20rpx 10rpx #ccc; 
-  height: 60px;
-  width: 60px;
-  padding: 1px;
+  height: 117rpx;
+  width: 117rpx;
+  padding: 2.34px;
 }
 .text-and-add{
   display: felx;
@@ -40,59 +46,75 @@
 .text-style{
   display: block;
   position: absolute;
-  margin-left: -120px;
-  margin-top: 5px;
-  width: 130px;
+  margin-left: -280.8rpx;
+  margin-top: 0rpx;
+  width: 304.2rpx;
   color:#000000;
 }
 .price-style{
   display: block;
   position: absolute;
-  margin-left: -45px;
-  margin-top: 28px;
+  margin-left: -105.3rpx;
+  margin-top: 46.8rpx;
   color:#000000;
 }
 .image-add {
   position: absolute;
-  margin-top: 50px;
-  margin-left: -30px;
-  height: 30px;
-  width: 30px;
+  margin-top: 93.6rpx;
+  margin-left: -70.2rpx;
+  height: 58.6rpx;
+  width: 58.6rpx;
 }
 .num {
   position: absolute;
-  margin-top: 55px;
-  margin-left: -50px;
-  height: 30px;
-  width: 30px;
+  margin-top: 105.3rpx;
+  margin-left: -117rpx;
+  height: 70.2rpx;
+  width: 70.2rpx;
   color: #939393
 }
 .image-sub {
   position: absolute;
-  margin-top: 50px;
-  margin-left: -90px;
-  height: 30px;
-  width: 30px;
+  margin-top: 93.6rpx;
+  margin-left: -190rpx;
+  height: 58.6rpx;
+  width: 58.6rpx;
 }
 .total_and_pay {
   display: flex;
+  flex: 1;
   flex-direction: row;
   position: fixed;
   bottom: 0;
+  height: 10%;
+  width: 100%;
+  line-height: 70.2rpx;
+  padding: 14.04rpx 0;
+  border-top: 2.34rpx solid #dedede;
+  font-size: 32.76rpx;
+  background-color: #fff;
 }
 .total {
-  font-size:45rpx;
   width:535rpx;
-  margin-top:15rpx;
+  margin-top: 18.72rpx;
+  margin-left: 23.4rpx;
 }
 .pay {
-  width:215rpx;
-  background:#FFFF00;
+  position: absolute;
+  background:#f3f3f3;
+  width: 351rpx;
+  height: 93.6rpx;
   font-weight:bold;
-  font-size:45rpx;
-  margin-left:5rpx;
+  margin-left: 351rpx;
   margin-bottom: 10rpx;
+  line-height: 93.6rpx;
+  font-size: 32.76rpx;
+  text-align: center;
 }
+.btn-hover{
+  background-color: yellow;
+}
+
 
 
 

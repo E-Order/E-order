@@ -20,8 +20,8 @@
     <view class="nav_right">
       <!--curIndex对应每个类别的下标-->
       <block wx:for="{{navLeftItems[curIndex].foods}}">
-      <!--selectproduct用于实现跳转详情界面现在还未实现-->
-        <view class="dish flex-wrap flex-direction-row" bindtap="selectproduct">
+      <navigator url="../components/detail/detail?id={{item.id}}">
+        <view class="dish flex-wrap flex-direction-row" >
           <image class="image-style" src="{{item.icon}}" mode="aspectFill"></image>
           <view class="text-and-add">
             <view class="text-style"> <text>{{item.name}}</text></view>
@@ -39,6 +39,7 @@
             </view>
           </view>
         </view>
+        </navigator>
       </block>
     </view>
   </view>
