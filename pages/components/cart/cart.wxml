@@ -28,7 +28,7 @@
      <!--计算购物车总额-->
      <view class="total_and_pay">
        <view class="total">总额：￥{{amount}}</view>
-       <button class="pay" hover-class="btn-hover">去支付</button>
+       <button class="pay" hover-class="btn-hover" catchtap="pay">去支付</button>
      </view>
      
   </view>

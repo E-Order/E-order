@@ -175,5 +175,41 @@ Page({
     })
     this.updateFoodnum();
     this.calTotal()
-  }
+  },
+
+  /* ********************
+  ** 提交订单 pay(未完成，API未理解)
+  ** 用户确定所需菜品及数量之后向后台提交订单
+  ** 参数 : 无
+  ** 返回值 : 无
+  ******************** */
+  // pay: function() {
+  //   console.log(app.globalData.openId.toString())
+  //   var deskid = new Number
+  //   deskid = app.globalData.tableNo
+  //   var amounts = new Number
+  //   amounts = this.amount
+  //   var openid = new String
+  //   amounts = app.globalData.openId.toString()
+  //   var that = this
+  //   wx.request({
+  //     url:'https://private-anon-0dcc67fda7-ordermeal.apiary-mock.com/sell/buyer/order/create',
+  //     data: {
+  //       'deskid': deskid,
+  //       'openid': openid,
+  //       'amount': amounts,
+  //       'items': [{
+  //         productId: "1423113435324",
+  //         productQuantity: 2
+  //       }]
+  //     },
+  //     header: {
+  //       'content-type': 'application/json' // 默认值
+  //     },
+  //     method: 'POST',
+  //     success: function(res) {
+  //       console.log(res.data.code)
+  //     }
+  //   })
+  // }
 })
