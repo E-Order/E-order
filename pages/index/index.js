@@ -85,7 +85,7 @@ Page({
   getFood: function() {
     var that = this
     wx.request({
-      url:'https://private-d2cad-ordermeal.apiary-mock.com/sell/buyer/product/list',
+      url:'https://private-b4689-ordermeal.apiary-mock.com/eorder/buyer/product/list',
       method: 'GET',
       data: {},
       header: {
