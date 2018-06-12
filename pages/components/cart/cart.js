@@ -183,33 +183,41 @@ Page({
   ** 参数 : 无
   ** 返回值 : 无
   ******************** */
-  // pay: function() {
-  //   console.log(app.globalData.openId.toString())
-  //   var deskid = new Number
-  //   deskid = app.globalData.tableNo
-  //   var amounts = new Number
-  //   amounts = this.amount
-  //   var openid = new String
-  //   amounts = app.globalData.openId.toString()
-  //   var that = this
-  //   wx.request({
-  //     url:'https://private-anon-0dcc67fda7-ordermeal.apiary-mock.com/sell/buyer/order/create',
-  //     data: {
-  //       'deskid': deskid,
-  //       'openid': openid,
-  //       'amount': amounts,
-  //       'items': [{
-  //         productId: "1423113435324",
-  //         productQuantity: 2
-  //       }]
-  //     },
-  //     header: {
-  //       'content-type': 'application/json' // 默认值
-  //     },
-  //     method: 'POST',
-  //     success: function(res) {
-  //       console.log(res.data.code)
-  //     }
-  //   })
-  // }
+  pay: function() {
+    // var openid = app.globalData.openId
+    var openid = "ew3euwhd7sjw9diwkq"
+    var arr = this.makeOrder()
+    var that = this
+    wx.request({
+      url:'https://private-b4689-ordermeal.apiary-mock.com/eorder/buyer/order/create',
+      data: {
+        'deskid': app.globalData.tableNo,
+        'openid': openid,
+        'amount': that.data.amount,
+        'items': arr
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      method: 'POST',
+      success: function(res) {
+        console.log(res.data.code)
+      }
+    })
+  },
+
+  /* ********************
+  ** 构造订单的菜品的相应数据 makeOrder
+  ** 用户确定所需菜品及数量之后向后台提交订单
+  ** 参数 : 无
+  ** 返回值 : arr 数组
+  ******************** */
+  makeOrder: function() {
+    var arr = new Array()
+    var len = this.data.cartfood.length
+    for (var i = 0; i < len; i++) {
+      arr[i] = {"productId": this.data.cartfood[i].id, "productQuantity": this.data.cartfoodnum[i]}
+    }
+    return arr
+  },
 })

@@ -177,9 +177,6 @@ Page({
     that.setData({
       foodnum: array_num,
     })
-    var id = new String
-    id = app.globalData.openId.toString()
-    console.log(app.globalData.openId)
   },
 
   /* ********************
