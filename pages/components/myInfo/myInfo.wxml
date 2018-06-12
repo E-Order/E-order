@@ -2,6 +2,10 @@
   <view bindtap="bindViewTap" class="userinfo">
    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+   <!-- 如果只是使用过头像和用户名可以用下面语句>
+   <open-data type="userAvatarUrl"></open-data>
+   <open-data type="userNickName"></open-data>
+   <-->
   </view>
   <view class="infolist">
     <block wx:for="{{userInfoList}}">
