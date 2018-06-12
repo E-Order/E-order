@@ -184,8 +184,9 @@ Page({
   ** 返回值 : 无
   ******************** */
   pay: function() {
-    // var openid = app.globalData.openId
-    var openid = "ew3euwhd7sjw9diwkq"
+    var openid = app.globalData.openId
+    console.log("openid(cart):", openid)
+    // var openid = "ew3euwhd7sjw9diwkq"
     var arr = this.makeOrder()
     var that = this
     wx.request({

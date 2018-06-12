@@ -22,6 +22,7 @@ Page({
     app.globalData.tableNo = decodeURIComponent(options.tableNo)
     console.log("tableNo: ", app.globalData.tableNo)
     this.getFood()
+    app.getUserInfo({})
   },
 
   // 我选择在onhide时进行数据传递，数据传递的方式是通过本地的存储，传递的数据是foodnum，

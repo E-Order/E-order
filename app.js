@@ -26,8 +26,10 @@ App({
       // 调用登录接口
       wx.login({
         success: function(res) {
-          var appid = 'wxfc6223f27324fba6';
-          var secret = '01c0a9edcdb03e1477e7e444907e96fd';
+          // var appid = 'wxfc6223f27324fba6';
+          var appid = that.globalData.appid
+          // var secret = '01c0a9edcdb03e1477e7e444907e96fd';
+          var secret = that.globalData.secret
           console.log('res.code', res.code);
           var d = that.globalData;//这里存储了appid、secret、token串    
           var l = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + d.appid + '&secret=' + d.secret + '&js_code=' + res.code + '&grant_type=authorization_code'; 
@@ -37,6 +39,7 @@ App({
             method:'GET',
             success: function (res1) {
               console.log('openid',res1.data.openid) //获取openid  
+              that.globalData.openId = res1.data.openid
             }
           })
            wx.getUserInfo({
