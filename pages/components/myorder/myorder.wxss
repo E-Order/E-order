@@ -1,1 +1,37 @@
 /* pages/components/myorder/myorder.wxss */
+.dish{
+  padding: 37.5rpx;
+	border-radius: 6%; 
+  background-color: #fff;
+  border-bottom: 15rpx solid #dedede;
+}
+.dish-details {
+  border-bottom: 2.34rpx solid #dedede;
+}
+.name_and_price {
+  padding: 10rpx;
+  color: #939393;
+}
+.name {
+  position: absolute;
+}
+.price {
+  margin-left: 500rpx;
+}
+.amount{
+  height: 65rpx;
+}
+.amount_tip{
+  position: absolute;
+  right: 0;
+  margin-top: 15rpx;
+  margin-right: 180rpx;
+  color: #939393;
+}
+.amount_money {
+  position: absolute;
+  right: 0;
+   margin-top: 15rpx;
+  margin-right: 30rpx;
+  color: orange;
+}

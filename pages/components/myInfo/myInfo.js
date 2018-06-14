@@ -86,6 +86,9 @@ Page({
     if (index == 0) {
       console.log("我的订单");
       // do something
+      wx.navigateTo({
+        url: '../myorder/myorder'　　// 跳转到订单详情界面
+      })
     } else if (index == 1) {
       console.log("我的优惠券");
       // do something

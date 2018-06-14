@@ -93,7 +93,7 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function(res) {
-        console.log(res.data.data)
+        console.log("foodlist",res.data.data)
         setTimeout(function () {
           that.setData({
             loadingHidden: true

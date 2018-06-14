@@ -202,7 +202,11 @@ Page({
       },
       method: 'POST',
       success: function(res) {
-        console.log(res.data.code)
+       // console.log(res.data.code)
+        console.log('deskid', app.globalData.tableNo)
+        console.log('openid', openid)
+        console.log('amount', that.data.amount)
+        console.log('food', arr)
       }
     })
   },
@@ -219,6 +223,7 @@ Page({
     for (var i = 0; i < len; i++) {
       arr[i] = {"productId": this.data.cartfood[i].id, "productQuantity": this.data.cartfoodnum[i]}
     }
+    console.log(arr)
     return arr
   },
 })

@@ -1,2 +1,21 @@
-<!--pages/components/myorder/myorder.wxml-->
-<text>pages/components/myorder/myorder.wxml</text>
+<view>
+ <block wx:for="{{orders}}">
+   <view class="dish flex-wrap flex-direction-col">
+        <view class="dish-details">
+          <block wx:for="{{orderDetail.orderDetailList}}">
+          <view class="name_and_price">
+            <view class="name">{{item.productName}}</view>
+            <view class="price">￥{{item.productPrice}}X{{item.productQuantity}}</view>
+          </view>
+          </block>
+        </view>
+        <view class="amount">
+          <view class="amount_tip">合计</view>
+          <view class="amount_money">￥{{orderDetail.orderAmount}}</view>
+        </view>
+   </view>
+ </block>
+ <loading hidden="{{loadingHidden}}">
+        加载中...
+  </loading>
+</view>
