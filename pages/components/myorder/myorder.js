@@ -83,9 +83,11 @@ Page({
     var arr = new Array()
     var id = app.globalData.openId
     wx.request({
+      // url:'http://www.e-order.cn:8080/eorder/buyer/order/list',
       url:'https://private-b4689-ordermeal.apiary-mock.com/eorder/buyer/order/list',
       data: {
-        'openid': id,
+        'openid': app.globalData.openId,
+        'sellerId': app.globalData.sellerId,
         'page': 0,
         'size': 10
       },
@@ -128,8 +130,8 @@ Page({
     wx.request({
       url:'https://private-b4689-ordermeal.apiary-mock.com/eorder/buyer/order/detail',
       data:{
-       // 'openid': openid,
-       // 'orderid': orderid
+        'openid': app.globalData.openId,
+        'orderid': orderid
       },
       header: {
         'content-type': 'application/json' // 默认值

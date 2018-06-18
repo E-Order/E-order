@@ -82,7 +82,7 @@ Page({
   },
   clickview: function(e) {
     // 获取点击是userInfoList中的哪一个
-    let index = e.target.dataset.index;
+    let index = e.currentTarget.dataset.index;
     if (index == 0) {
       console.log("我的订单");
       // do something

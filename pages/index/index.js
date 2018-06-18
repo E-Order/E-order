@@ -20,7 +20,22 @@ Page({
   onLoad: function(options) {
     // 获取扫码得到的桌号
     app.globalData.tableNo = decodeURIComponent(options.tableNo)
+    app.globalData.sellerId = decodeURIComponent(options.sellerId)
     console.log("tableNo: ", app.globalData.tableNo)
+    console.log("sellerId: ", app.globalData.sellerId)
+
+    // 这里需要后期讨论一下究竟如何解决不是扫码进该小程序的问题
+    if (app.globalData.tableNo != undefined) {
+      console.log("undefined!")
+      app.globalData.tableNo = -1
+    }
+    if (app.globalData.sellerId != undefined) {
+      console.log("undefined!")
+      app.globalData.sellerId = -1
+    }
+    console.log("1-tableNo: ", app.globalData.tableNo)
+    console.log("1-sellerId: ", app.globalData.sellerId)
+
     this.getFood()
     app.getUserInfo({})
   },
@@ -88,7 +103,9 @@ Page({
     wx.request({
       url:'https://private-b4689-ordermeal.apiary-mock.com/eorder/buyer/product/list',
       method: 'GET',
-      data: {},
+      data: {
+        'sellerId': app.globalData.sellerId
+      },
       header: {
         'Content-Type': 'application/json'
       },

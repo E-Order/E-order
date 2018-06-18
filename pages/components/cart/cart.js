@@ -220,11 +220,11 @@ Page({
     wx.setStorage({
       key: 'pay_detail',
       data: {
-        'deskid': app.globalData.tableNo,
-        'openid': openid,
+        // 'deskid': app.globalData.tableNo,
+        // 'openid': openid,
+        'cartfood': that.data.cartfood,
         'amount': that.data.amount,
-        'items': arr,
-        'cartfood': that.data.cartfood
+        'items': arr
       },
     })
     // 清空购物车与点餐界面

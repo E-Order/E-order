@@ -59,6 +59,7 @@ App({
     secret:'45309d94006144ae9bbfc4eeeec71a9f',
     userInfo: null,
     openId: null,
-    tableNo: null, // 通过扫码获得的桌号
+    tableNo: -1, // 通过扫码获得的桌号
+    sellerId: -1,
   }
 })
