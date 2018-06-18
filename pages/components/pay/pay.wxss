@@ -1,0 +1,69 @@
+/* pages/components/pay/pay.wxss */
+
+.dish{
+  padding: 37.5rpx;
+	border-radius: 6%; 
+  text-align: center;
+  color: #939393;
+  height: 70%;
+  position: fixed;
+  width: 90%;
+  background-color: #fff;
+}
+
+.dish-details {
+  border-bottom: 2.34rpx solid #dedede;
+}
+.name_and_price {
+  padding: 10rpx;
+  color: #939393;
+}
+.name {
+  position: absolute;
+}
+.price {
+  margin-left: 500rpx;
+}
+.amount{
+  height: 65rpx;
+}
+.amount_tip{
+  position: absolute;
+  right: 0;
+  margin-top: 15rpx;
+  margin-right: 180rpx;
+  color: #939393;
+}
+.amount_money {
+  position: absolute;
+  right: 0;
+   margin-top: 15rpx;
+  margin-right: 30rpx;
+  color: orange;
+}
+.check {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  position: fixed;
+  bottom: 0;
+  height: 10%;
+  width: 100%;
+  line-height: 70.2rpx;
+  padding: 14.04rpx 0;
+}
+.pay_by_money {
+  height: 100rpx;
+  background: orange;
+   width: 300rpx;
+  text-align: center;
+}
+.pay_online {
+  height: 100rpx;
+  width: 300rpx;
+  background: orange;
+  text-align: center;
+}
+.btn-hover{
+  background-color: yellow;
+}

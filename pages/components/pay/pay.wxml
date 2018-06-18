@@ -1,0 +1,21 @@
+<view class="container">
+  <scroll-view scroll-y="true"class="dish flex-wrap flex-direction-col">
+    <view>订单详情</view>
+    <view class="dish-details">
+      <block wx:for="{{orderDetail}}">
+        <view class="name_and_price">
+          <view class="name">{{item.name}}</view>
+          <view class="price">￥{{item.price}}X{{orderItems[index].productQuantity}}</view>
+        </view>
+      </block>
+    </view>
+    <view class="amount">
+      <view class="amount_tip">合计</view>
+      <view class="amount_money">￥{{amount}}</view>
+    </view>
+ </scroll-view>
+  <view class="check">
+    <button class="pay_by_money" hover-class="btn-hover" catchtap="pay_by_money">线下支付</button>
+    <button class="pay_online" hover-class="btn-hover" catchtap="pay_online">线上支付</button>
+  </view>
+</view>

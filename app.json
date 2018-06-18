@@ -4,7 +4,8 @@
         "pages/components/cart/cart",
         "pages/components/myInfo/myInfo",
         "pages/components/detail/detail",
-        "pages/components/myorder/myorder"
+        "pages/components/myorder/myorder",
+        "pages/components/pay/pay"
     ],
     "window": {
         "backgroundTextStyle": "white",

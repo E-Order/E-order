@@ -184,7 +184,7 @@ Page({
   ** 返回值 : 无
   ******************** */
   pay: function() {
-    var openid = app.globalData.openId
+    /*var openid = app.globalData.openId
     console.log("openid(cart):", openid)
     // var openid = "ew3euwhd7sjw9diwkq"
     var arr = this.makeOrder()
@@ -208,6 +208,43 @@ Page({
         console.log('amount', that.data.amount)
         console.log('food', arr)
       }
+    })*/
+    // do something
+    // 传递购物车信息给支付界面
+    var openid = app.globalData.openId
+    console.log("openid(cart):", openid)
+    var arr = this.makeOrder()
+    var that = this
+    console.log("items", arr)
+    console.log("amount", that.data.amount)
+    wx.setStorage({
+      key: 'pay_detail',
+      data: {
+        'deskid': app.globalData.tableNo,
+        'openid': openid,
+        'amount': that.data.amount,
+        'items': arr,
+        'cartfood': that.data.cartfood
+      },
+    })
+    // 清空购物车与点餐界面
+    var that = this;
+    var array_num = new Array();
+    let len1 = this.data.cartfoodnum.length;
+    for (var i = 0; i < len1; i++) {
+      array_num[i] = 0;
+    }
+    that.setData({
+      cartfoodnum: array_num,
+    })
+    console.log("array_numincart", array_num)
+    console.log("addfoodnum", this.data.foodnum)
+    this.updateFoodnum();
+
+    //跳转到支付界面
+    console.log("跳转到支付界面");
+    wx.navigateTo({
+      url: '../pay/pay'　　
     })
   },
 
