@@ -1,6 +1,8 @@
 // pages/components/pay/pay.js
 const app = getApp()
 
+var config = require('../../../config')
+
 Page({
 
   /**
@@ -95,7 +97,7 @@ Page({
   submitOrder: function(options) {
     var that = this
     wx.request({
-      url:'https://private-b4689-ordermeal.apiary-mock.com/eorder/buyer/order/create',
+      url:config.service.creatOrderUrl,
       data: {
         'deskId': app.globalData.tableNo,
         'openid': app.globalData.openId,
@@ -127,6 +129,8 @@ Page({
   ******************** */
   pay_by_money: function() {
     this.submitOrder("pay_offline")
+    this.emptyCart()
+    this.gotoIndex()
   },
 
   /* ********************
@@ -137,5 +141,47 @@ Page({
   ******************** */
   pay_online: function() {
     this.submitOrder("pay_online")
+    this.emptyCart()
+    this.gotoIndex()
+  },
+
+  /* ********************
+  ** 清空购物车 emptyCart
+  ** 
+  ** 参数 : 
+  ** 返回值 : 
+  ******************** */
+  emptyCart: function() {
+    var that = this
+    wx.getStorage({
+      key: 'foodnum',
+      success: function (res) {
+        var array = res.data
+        var len = array.length
+        for (var i = 0; i < len; i++) {
+          array[i].fill(0)
+        }
+        // array.fill(0)
+        console.log('array(emptycart):', array)
+        wx.setStorage({
+          key: 'foodnum',
+          data: array,
+        })
+      }
+    })
+  },
+
+  /* ********************
+  ** 跳转到菜单页面 gotoIndex
+  ** 
+  ** 参数 : 
+  ** 返回值 : 
+  ******************** */
+  gotoIndex: function() {
+    //跳转到菜单界面
+    console.log("跳转到菜单界面")
+    wx.switchTab({
+      url: '../../index/index'　　
+    })
   },
 })

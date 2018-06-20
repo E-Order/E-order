@@ -2,6 +2,8 @@
 //获取应用实例
 const app = getApp()
 
+var config = require('../../config')
+
 Page({
   data: {
     // 关于滑动图片的动画，后期可以循环热销菜品等等
@@ -38,6 +40,7 @@ Page({
 
     this.getFood()
     app.getUserInfo({})
+    app.getOpenId({})
   },
 
   // 我选择在onhide时进行数据传递，数据传递的方式是通过本地的存储，传递的数据是foodnum，
@@ -69,6 +72,8 @@ Page({
     for (var i = 0; i < num; i++) {
       arr[i] = val;
     }
+    // arr.fill(val, 0, num)
+    console.log('arr.fill:', arr)
     return arr;
   },
 
@@ -101,7 +106,7 @@ Page({
   getFood: function() {
     var that = this
     wx.request({
-      url:'https://private-b4689-ordermeal.apiary-mock.com/eorder/buyer/product/list',
+      url:config.service.getProductUrl,
       method: 'GET',
       data: {
         'sellerId': app.globalData.sellerId

@@ -228,18 +228,18 @@ Page({
       },
     })
     // 清空购物车与点餐界面
-    var that = this;
-    var array_num = new Array();
-    let len1 = this.data.cartfoodnum.length;
-    for (var i = 0; i < len1; i++) {
-      array_num[i] = 0;
-    }
-    that.setData({
-      cartfoodnum: array_num,
-    })
-    console.log("array_numincart", array_num)
-    console.log("addfoodnum", this.data.foodnum)
-    this.updateFoodnum();
+    // var that = this;
+    // var array_num = new Array();
+    // let len1 = this.data.cartfoodnum.length;
+    // for (var i = 0; i < len1; i++) {
+    //   array_num[i] = 0;
+    // }
+    // that.setData({
+    //   cartfoodnum: array_num,
+    // })
+    // console.log("array_numincart", array_num)
+    // console.log("addfoodnum", this.data.foodnum)
+    // this.updateFoodnum();
 
     //跳转到支付界面
     console.log("跳转到支付界面");

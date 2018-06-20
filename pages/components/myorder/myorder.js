@@ -1,6 +1,8 @@
 // pages/components/myorder/myorder.js
 const app = getApp()
 
+var config = require('../../../config')
+
 Page({
 
   /**
@@ -9,6 +11,7 @@ Page({
   data: {
     openid: null,
     orders: [],
+    allordersdetails: []
   },
 
   /**
@@ -16,7 +19,7 @@ Page({
    */
   onLoad: function (options) {
     this.GetOrderList()
-    //console.log('test',this.data.orders)
+    // this.GetAllOrderDetails()
   },
 
   /**
@@ -30,11 +33,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var arr = new Array()
-    arr = this.GetOrderDetails()
-    this.setData({
-      allorders:arr
-    })
+    // console.log('test-show',this.data.orders)
+    // this.GetAllOrderDetails()
   },
 
   /**
@@ -84,7 +84,7 @@ Page({
     var id = app.globalData.openId
     wx.request({
       // url:'http://www.e-order.cn:8080/eorder/buyer/order/list',
-      url:'https://private-b4689-ordermeal.apiary-mock.com/eorder/buyer/order/list',
+      url:config.service.getOrderListUrl,
       data: {
         'openid': app.globalData.openId,
         'sellerId': app.globalData.sellerId,
@@ -96,20 +96,24 @@ Page({
       },
       method: 'GET',
       success: function(res) {
-       console.log("orders:", res.data.data)
-       setTimeout(function () {
-         that.setData({
-           loadingHidden: true
-         })
-       }, 1500)
+        // console.log("orders:", res.data.data)
+        setTimeout(function () {
+          that.setData({
+            loadingHidden: true
+          })
+        }, 1500)
         arr = res.data.data
         that.setData({
           orders: arr,
           //openid: app.globalData.openId
         })
+        console.log("orders:", that.data.orders)
+        that.GetAllOrderDetails()
       }
     })
-    return arr
+    // this.GetAllOrderDetails()
+    // console.log("orders:", arr)
+    // return arr
   },
 
   /* ********************
@@ -124,13 +128,32 @@ Page({
    * 循环遍历整个后台，获取与用户id相同的所有订单
    * 将其加入arr中，而不是只有一个订单
    */
-  GetOrderDetails: function(/*openid, orderid*/) {
+  GetAllOrderDetails: async function() {
     var that = this
+    var len = this.data.orders.length
+    console.log("orderslen:", len)
+    var result = new Array(len)
+    for (var i = 0; i < len; i++) {
+      result[i] = new Array()
+      console.log('all details-orderid:', this.data.orders[i].orderId)
+      result[i] = await this.GetOrderDetails(this.data.orders[i].orderId)
+    }
+    console.log('result:', result)
+  },
+
+  /* ********************
+  ** 获取订单详情 GetOrderDetails
+  ** 从后台服务器获取该用户的某个订单的详情
+  ** 参数 : openid, orderid
+  ** 返回值 : arr 数组
+  ******************** */
+  GetOrderDetails: function(orderid) {
     var arr = new Array()
     wx.request({
-      url:'https://private-b4689-ordermeal.apiary-mock.com/eorder/buyer/order/detail',
+      url:config.service.getOrderDetailUrl,
       data:{
         'openid': app.globalData.openId,
+        'sellerId':app.globalData.sellerId,
         'orderid': orderid
       },
       header: {
@@ -140,12 +163,8 @@ Page({
       success: function(res) {
         console.log("order details:", res.data.data)
         arr = res.data.data
-        that.setData({
-          orderDetail: arr,
-        })
       }
     })
-    return arr
   },
 
 })
