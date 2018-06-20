@@ -158,7 +158,7 @@ Page({
       },
       method: 'GET',
       success: function(res) {
-        console.log("order details:", res.data.data)
+       // console.log("order details:", res.data.data)
         arr = res.data.data
         var details = that.data.orderDetail
         details.push(res.data.data)

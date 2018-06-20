@@ -1,8 +1,8 @@
 <view>
- <block wx:for="{{orders}}">
+ <block wx:for="{{orderDetail}}">
    <view class="dish flex-wrap flex-direction-col">
         <view class="dish-details">
-          <block wx:for="{{orderDetail.orderDetailList}}">
+          <block wx:for="{{item.orderDetailList}}">
           <view class="name_and_price">
             <view class="name">{{item.productName}}</view>
             <view class="price">￥{{item.productPrice}}X{{item.productQuantity}}</view>
@@ -11,7 +11,7 @@
         </view>
         <view class="amount">
           <view class="amount_tip">合计</view>
-          <view class="amount_money">￥{{orderDetail.orderAmount}}</view>
+          <view class="amount_money">￥{{item.orderAmount}}</view>
         </view>
    </view>
  </block>
