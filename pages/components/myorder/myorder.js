@@ -11,7 +11,7 @@ Page({
   data: {
     openid: null,
     orders: [],
-    allordersdetails: []
+    orderDetail: []
   },
 
   /**
@@ -102,9 +102,9 @@ Page({
             loadingHidden: true
           })
         }, 1500)
-        arr = res.data.data
+        // arr = res.data.data
         that.setData({
-          orders: arr,
+          orders: res.data.data,
           //openid: app.globalData.openId
         })
         console.log("orders:", that.data.orders)
@@ -128,17 +128,13 @@ Page({
    * 循环遍历整个后台，获取与用户id相同的所有订单
    * 将其加入arr中，而不是只有一个订单
    */
-  GetAllOrderDetails: async function() {
-    var that = this
+  GetAllOrderDetails: function() {
     var len = this.data.orders.length
     console.log("orderslen:", len)
-    var result = new Array(len)
     for (var i = 0; i < len; i++) {
-      result[i] = new Array()
       console.log('all details-orderid:', this.data.orders[i].orderId)
-      result[i] = await this.GetOrderDetails(this.data.orders[i].orderId)
+      this.GetOrderDetails(this.data.orders[i].orderId)
     }
-    console.log('result:', result)
   },
 
   /* ********************
@@ -149,6 +145,7 @@ Page({
   ******************** */
   GetOrderDetails: function(orderid) {
     var arr = new Array()
+    var that = this
     wx.request({
       url:config.service.getOrderDetailUrl,
       data:{
@@ -163,6 +160,12 @@ Page({
       success: function(res) {
         console.log("order details:", res.data.data)
         arr = res.data.data
+        var details = that.data.orderDetail
+        details.push(res.data.data)
+        that.setData({
+          orderDetail: details
+        })
+        console.log('orderDetail:', that.data.orderDetail)
       }
     })
   },
