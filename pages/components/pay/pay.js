@@ -129,8 +129,7 @@ Page({
   ******************** */
   pay_by_money: function() {
     this.submitOrder("pay_offline")
-    this.emptyCart()
-    this.gotoIndex()
+    this.offline_done()
   },
 
   /* ********************
@@ -141,8 +140,8 @@ Page({
   ******************** */
   pay_online: function() {
     this.submitOrder("pay_online")
-    this.emptyCart()
-    this.gotoIndex()
+    // this.emptyCart()
+    this.online_done()
   },
 
   /* ********************
@@ -184,4 +183,96 @@ Page({
       url: '../../index/index'　　
     })
   },
+
+  /* ********************
+  ** 线下支付完成操作 offline_done
+  ** 
+  ** 参数 : 
+  ** 返回值 : 
+  ******************** */
+  offline_done: function() {
+    var that = this
+    this.emptyCart()
+    wx.showToast({
+      title: '订单提交成功！',
+      icon: 'success',
+      duration: 1000,
+      mask: true,
+      success: function() {
+        setTimeout(function() {
+          wx.hideToast()
+          that.gotoIndex()
+        }, 1000)
+      }
+    })
+  },
+
+  /* ********************
+  ** 线上支付完成操作 online_done
+  ** 
+  ** 参数 : 
+  ** 返回值 : 
+  ******************** */
+  online_done: function() {
+    var that = this
+    wx.showToast({
+      title: '跳转到支付页面',
+      icon: 'loading',
+      duration: 1000,
+      mask: true,
+      success: function() {
+        setTimeout(function() {
+          wx.hideToast()
+        }, 3000)
+        setTimeout(function() {
+          that.pay_done()
+        }, 1000)
+      }
+    })
+  },
+
+  /* ********************
+  ** 线上支付提示 pay_done
+  ** 
+  ** 参数 : 
+  ** 返回值 : 
+  ******************** */
+  pay_done: function() {
+    var that = this
+    wx.showModal({
+      title: '确认支付',
+      content: '模拟实现线上支付',
+      success: function(res) {
+        if (res.confirm) {
+          that.emptyCart()
+          wx.showToast({
+            title: '支付成功！',
+            icon: 'success',
+            duration: 1000,
+            success: function() {
+              setTimeout(function() {
+                wx.hideToast()
+              }, 3000)
+              setTimeout(function() {
+                that.gotoIndex()
+              }, 1000)
+            }
+          })
+        } else {
+          wx.showToast({
+            title: '取消支付',
+            duration: 1000,
+            success: function() {
+              setTimeout(function() {
+                wx.hideToast()
+              }, 3000)
+              setTimeout(function() {
+                that.gotoIndex()
+              }, 1000)
+            }
+          })
+        }
+      }
+    })
+  }
 })
