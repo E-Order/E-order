@@ -22,7 +22,7 @@ Page({
   onLoad: function(options) {
     if ((options.tableNo !== undefined) && (options.sellerId !== undefined)) {
       console.log("扫码获得商家ID和桌号")
-      app.globalData.tableNo = decodeURIComponent(options.tableNo)
+      app.globalData.tableNo = parseInt(decodeURIComponent(options.tableNo))
       app.globalData.sellerId = decodeURIComponent(options.sellerId)
     } else {
       if ((app.globalData.tableNo !== null) && (app.globalData.sellerId !== null)) {

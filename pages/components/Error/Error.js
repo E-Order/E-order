@@ -75,7 +75,7 @@ Page({
         var seller = res.path.match(/sellerId=(\S*)&/)[1]
         console.log("table:", table)
         console.log("seller:", seller)
-        app.globalData.tableNo = table
+        app.globalData.tableNo = parseInt(table)
         app.globalData.sellerId = seller
         wx.switchTab({
           url: "../../index/index"
