@@ -20,23 +20,20 @@ Page({
   
   // onload函数，从api获得数据，但是我觉得应该把里面所有的函数都改到onshow中去
   onLoad: function(options) {
-    // 获取扫码得到的桌号
-    app.globalData.tableNo = decodeURIComponent(options.tableNo)
-    app.globalData.sellerId = decodeURIComponent(options.sellerId)
-    console.log("tableNo: ", app.globalData.tableNo)
-    console.log("sellerId: ", app.globalData.sellerId)
-
-    // 这里需要后期讨论一下究竟如何解决不是扫码进该小程序的问题
-    if (app.globalData.tableNo != undefined) {
-      console.log("undefined!")
-      app.globalData.tableNo = -1
+    if ((options.tableNo !== undefined) && (options.sellerId !== undefined)) {
+      console.log("扫码获得商家ID和桌号")
+      app.globalData.tableNo = decodeURIComponent(options.tableNo)
+      app.globalData.sellerId = decodeURIComponent(options.sellerId)
+    } else {
+      if ((app.globalData.tableNo !== null) && (app.globalData.sellerId !== null)) {
+        console.log("商家ID和桌号不为空")
+      } else {
+        console.log("不是扫码获得商家ID和桌号")
+        wx.redirectTo({
+          url:'../components/Error/Error'
+        })
+      }
     }
-    if (app.globalData.sellerId != undefined) {
-      console.log("undefined!")
-      app.globalData.sellerId = -1
-    }
-    console.log("1-tableNo: ", app.globalData.tableNo)
-    console.log("1-sellerId: ", app.globalData.sellerId)
 
     this.getFood()
     app.getUserInfo({})
@@ -85,7 +82,7 @@ Page({
   ******************** */
   initdata: function(res) {
     var array_num = new Array()
-    var len1 = res.data.data.length
+    let len1 = res.data.data.length
     for (var i = 0; i < len1; i++) {
       var len2 = res.data.data[i].foods.length
       array_num[i] = this.initarray(len2, 0);
@@ -106,7 +103,8 @@ Page({
   getFood: function() {
     var that = this
     wx.request({
-      url:config.service.getProductUrl,
+      // url:config.service.getProductUrl,
+      url:'http://123.207.7.251:8080/eorder/buyer/product/list',
       method: 'GET',
       data: {
         'sellerId': app.globalData.sellerId
@@ -115,7 +113,7 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function(res) {
-        console.log("foodlist",res.data.data)
+        console.log("foodlist",res.data)
         setTimeout(function () {
           that.setData({
             loadingHidden: true

@@ -95,6 +95,9 @@ Page({
   ** 返回值 : 
   ******************** */
   submitOrder: function(options) {
+    console.log("submit_sellerId:", app.globalData.sellerId)
+    console.log("submit_deskId:", app.globalData.tableNo)
+    console.log("submit_openid:", app.globalData.openId)
     var that = this
     wx.request({
       url:config.service.creatOrderUrl,
@@ -104,19 +107,21 @@ Page({
         'sellerId':app.globalData.sellerId,
         'amount': that.data.amount,
         'items': that.data.orderItems
-        // 'paystatus': true
       },
       header: {
         'content-type': 'application/json' // 默认值
       },
       method: 'POST',
       success: function(res) {
-        // console.log(res.data.code)
-        // console.log('deskid', app.globalData.tableNo)
-        // console.log('openid', app.globalData.openId)
-        // console.log('amount', that.data.amount)
-        // console.log('food', arr)
+        // console.log("data:", data)
         console.log(res.data)
+        if (options == "pay_offline") {
+          console.log("pay_offline")
+          that.offline_done()
+        } else if (options == "pay_online") {
+          console.log("pay_online")
+          that.online_done()
+        }
       }
     })
   },
@@ -129,7 +134,7 @@ Page({
   ******************** */
   pay_by_money: function() {
     this.submitOrder("pay_offline")
-    this.offline_done()
+    // this.offline_done()
   },
 
   /* ********************
@@ -141,7 +146,7 @@ Page({
   pay_online: function() {
     this.submitOrder("pay_online")
     // this.emptyCart()
-    this.online_done()
+    // this.online_done()
   },
 
   /* ********************
@@ -213,7 +218,7 @@ Page({
   ** 参数 : 
   ** 返回值 : 
   ******************** */
-  online_done: function() {
+  online_done: function(id) {
     var that = this
     wx.showToast({
       title: '跳转到支付页面',
@@ -225,7 +230,7 @@ Page({
           wx.hideToast()
         }, 3000)
         setTimeout(function() {
-          that.pay_done()
+          that.pay_done(id)
         }, 1000)
       }
     })
@@ -237,7 +242,7 @@ Page({
   ** 参数 : 
   ** 返回值 : 
   ******************** */
-  pay_done: function() {
+  pay_done: function(id) {
     var that = this
     wx.showModal({
       title: '确认支付',
@@ -245,6 +250,7 @@ Page({
       success: function(res) {
         if (res.confirm) {
           that.emptyCart()
+          that.onlinepay(id)
           wx.showToast({
             title: '支付成功！',
             icon: 'success',
@@ -272,6 +278,24 @@ Page({
             }
           })
         }
+      }
+    })
+  },
+
+  onlinepay: function(id) {
+    console.log("orderId:", id)
+    wx.request({
+      url:config.service.creatOrderUrl,
+      data: {
+        'openid': app.globalData.openId,
+        'orderId':id,
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      method: 'POST',
+      success: function(res) {
+        console.log(res.data)
       }
     })
   }
