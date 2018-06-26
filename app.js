@@ -105,6 +105,7 @@ App({
     appid:'wx3cf64998f8d0620d',
     secret:'45309d94006144ae9bbfc4eeeec71a9f',
     userInfo: null,
+    // openId: '1234567890987654321',
     openId: null,
     tableNo: null, // 通过扫码获得的桌号
     sellerId: null,

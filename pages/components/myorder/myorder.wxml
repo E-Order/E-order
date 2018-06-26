@@ -2,7 +2,7 @@
  <block wx:for="{{orderDetail}}">
    <view class="dish flex-wrap flex-direction-col">
         <view class="dish-details">
-          <block wx:for="{{item.orderDetailList}}">
+          <block wx:for="{{item.orderDetailVOList}}">
           <view class="name_and_price">
             <view class="name">{{item.productName}}</view>
             <view class="price">￥{{item.productPrice}}X{{item.productQuantity}}</view>

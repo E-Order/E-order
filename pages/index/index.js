@@ -103,8 +103,8 @@ Page({
   getFood: function() {
     var that = this
     wx.request({
-      // url:config.service.getProductUrl,
-      url:'http://123.207.7.251:8080/eorder/buyer/product/list',
+      url:config.service.getProductUrl,
+      // url:'http://123.207.7.251:8080/eorder/buyer/product/list',
       method: 'GET',
       data: {
         'sellerId': app.globalData.sellerId

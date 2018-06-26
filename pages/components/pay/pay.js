@@ -99,6 +99,7 @@ Page({
     console.log("submit_deskId:", app.globalData.tableNo)
     console.log("submit_openid:", app.globalData.openId)
     var that = this
+    console.log("JSON:", JSON.stringify(that.data.orderItems))
     wx.request({
       url:config.service.creatOrderUrl,
       data: {
@@ -106,21 +107,20 @@ Page({
         'openid': app.globalData.openId,
         'sellerId':app.globalData.sellerId,
         'amount': that.data.amount,
-        'items': that.data.orderItems
+        'items': JSON.stringify(that.data.orderItems)
       },
       header: {
-        'content-type': 'application/json' // 默认值
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
       },
       method: 'POST',
       success: function(res) {
-        // console.log("data:", data)
         console.log(res.data)
         if (options == "pay_offline") {
           console.log("pay_offline")
           that.offline_done()
         } else if (options == "pay_online") {
           console.log("pay_online")
-          that.online_done()
+          that.online_done(res.data.data.orderId)
         }
       }
     })
@@ -218,7 +218,7 @@ Page({
   ** 参数 : 
   ** 返回值 : 
   ******************** */
-  online_done: function(id) {
+  online_done: function(orderId) {
     var that = this
     wx.showToast({
       title: '跳转到支付页面',
@@ -230,7 +230,7 @@ Page({
           wx.hideToast()
         }, 3000)
         setTimeout(function() {
-          that.pay_done(id)
+          that.pay_done(orderId)
         }, 1000)
       }
     })
@@ -242,7 +242,7 @@ Page({
   ** 参数 : 
   ** 返回值 : 
   ******************** */
-  pay_done: function(id) {
+  pay_done: function(orderId) {
     var that = this
     wx.showModal({
       title: '确认支付',
@@ -250,7 +250,7 @@ Page({
       success: function(res) {
         if (res.confirm) {
           that.emptyCart()
-          that.onlinepay(id)
+          that.onlinepay(orderId)
           wx.showToast({
             title: '支付成功！',
             icon: 'success',
@@ -282,16 +282,16 @@ Page({
     })
   },
 
-  onlinepay: function(id) {
-    console.log("orderId:", id)
+  onlinepay: function(orderId) {
+    console.log("orderId:", orderId)
     wx.request({
-      url:config.service.creatOrderUrl,
+      url:config.service.payOrderUrl,
       data: {
         'openid': app.globalData.openId,
-        'orderId':id,
+        'orderId': orderId,
       },
       header: {
-        'content-type': 'application/json' // 默认值
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
       },
       method: 'POST',
       success: function(res) {

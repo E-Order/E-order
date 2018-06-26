@@ -151,14 +151,14 @@ Page({
       data:{
         'openid': app.globalData.openId,
         'sellerId':app.globalData.sellerId,
-        'orderid': orderid
+        'orderId': orderid
       },
       header: {
         'content-type': 'application/json' // 默认值
       },
       method: 'GET',
       success: function(res) {
-       // console.log("order details:", res.data.data)
+        console.log("order details:", res.data.data)
         arr = res.data.data
         var details = that.data.orderDetail
         details.push(res.data.data)
