@@ -1,3 +1,7 @@
 <!--pages/components/Error/Error.wxml-->
-<text>请扫码进入小程序</text>
+<view class="error">
+<image class="image" src="../../../images/E-order.png"></image>
+</view>
+<view class="scan">
 <button class="pay_by_money" hover-class="btn-hover" catchtap="scan">扫描二维码</button>
+</view>

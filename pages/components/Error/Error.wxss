@@ -1,1 +1,9 @@
 /* pages/components/Error/Error.wxss */
+.image {
+  height: 400rpx;
+  width: 400rpx;
+  margin-left: 25%;
+}
+.btn-hover{
+  background-color: yellow;
+}
