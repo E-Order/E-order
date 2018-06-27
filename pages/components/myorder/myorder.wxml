@@ -9,6 +9,9 @@
           </view>
           </block>
         </view>
+        <view class="time">
+          <view class="creat_time">{{item.createTime}}</view>
+        </view>
         <view class="amount">
           <view class="amount_tip">合计</view>
           <view class="amount_money">￥{{item.orderAmount}}</view>

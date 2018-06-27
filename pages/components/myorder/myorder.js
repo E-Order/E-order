@@ -2,6 +2,7 @@
 const app = getApp()
 
 var config = require('../../../config')
+var util = require('../../../utils/util.js')
 
 Page({
 
@@ -9,9 +10,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    openid: null,
     orders: [],
-    orderDetail: []
+    orderDetail: [],
+    temporderDetail: [],
+    ordernum: 0
   },
 
   /**
@@ -19,7 +21,6 @@ Page({
    */
   onLoad: function (options) {
     this.GetOrderList()
-    // this.GetAllOrderDetails()
   },
 
   /**
@@ -81,9 +82,7 @@ Page({
   GetOrderList: function() {
     var that = this
     var arr = new Array()
-    var id = app.globalData.openId
     wx.request({
-      // url:'http://www.e-order.cn:8080/eorder/buyer/order/list',
       url:config.service.getOrderListUrl,
       data: {
         'openid': app.globalData.openId,
@@ -105,9 +104,11 @@ Page({
         // arr = res.data.data
         that.setData({
           orders: res.data.data,
+          ordernum: res.data.data.length
           //openid: app.globalData.openId
         })
         console.log("orders:", that.data.orders)
+        console.log("ordernum:", that.data.ordernum)
         that.GetAllOrderDetails()
       }
     })
@@ -159,15 +160,52 @@ Page({
       method: 'GET',
       success: function(res) {
         console.log("order details:", res.data.data)
-        arr = res.data.data
-        var details = that.data.orderDetail
+        var arr = res.data.data
+        var details = that.data.temporderDetail
+        // arr.createTime = that.getDateTime(that.ConvertJSONDateToJSDate(arr.createTime))
+        var date = new Date()
+        date.setTime(arr.createTime * 1000)
+        arr.createTime = util.formatTime(date)
         details.push(res.data.data)
         that.setData({
-          orderDetail: details
+          temporderDetail: details
         })
-        console.log('orderDetail:', that.data.orderDetail)
+        console.log('temporderDetail:', that.data.temporderDetail)
+        if (that.data.temporderDetail.length == that.data.ordernum) {
+          console.log("index == that.data.ordernum")
+          that.sortOrder()
+        }
       }
     })
   },
+
+  sortOrder: function() {
+    var len = this.data.temporderDetail.length
+    for (var i = 0; i < len; i++) {
+      this.findMax()
+    }
+  },
+
+  findMax: function() {
+    var len = this.data.temporderDetail.length
+    if (len !== 0) {
+      var max = 0
+      var index = -1
+      for (var i = 0; i < len; i++) {
+        if (this.data.temporderDetail[i].updateTime > max) {
+          console.log("i (updateTime > max):", i)
+          index = i
+          max = this.data.temporderDetail[i].updateTime
+        }
+      }
+      console.log('findMax_index:', index)
+      var arr = this.data.orderDetail
+      arr.push(this.data.temporderDetail[index])
+      var temparr = this.data.temporderDetail.splice(index, 1)
+      this.setData({
+        orderDetail: arr,
+      })
+    }
+  }
 
 })
