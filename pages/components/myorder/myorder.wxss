@@ -5,6 +5,11 @@
   background-color: #fff;
   border-bottom: 15rpx solid #dedede;
 }
+.time {
+  padding: 10rpx;
+  color: #939393;
+  border-bottom: 2.34rpx solid #dedede;
+}
 .dish-details {
   border-bottom: 2.34rpx solid #dedede;
 }

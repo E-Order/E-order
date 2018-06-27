@@ -1,6 +1,9 @@
 <view>
  <block wx:for="{{orderDetail}}">
    <view class="dish flex-wrap flex-direction-col">
+        <view class="time">
+          <view class="creat_time">下单时间：{{item.createTime}}</view>
+        </view>
         <view class="dish-details">
           <block wx:for="{{item.orderDetailVOList}}">
           <view class="name_and_price">
@@ -8,9 +11,6 @@
             <view class="price">￥{{item.productPrice}}X{{item.productQuantity}}</view>
           </view>
           </block>
-        </view>
-        <view class="time">
-          <view class="creat_time">{{item.createTime}}</view>
         </view>
         <view class="amount">
           <view class="amount_tip">合计</view>
