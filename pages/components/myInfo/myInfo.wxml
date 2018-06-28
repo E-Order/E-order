@@ -10,7 +10,7 @@
   </view>
   <view class="infolist">
     <block wx:for="{{userInfoList}}">
-      <view class="sample-view" bindtap="clickview" data-index="{{index}}">
+      <view class="sample-view" bindtap="clickView" data-index="{{index}}">
         <view class="view-icon"><image src="{{item.icon}}"></image></view>
         <view class="view-text">
           <view class="text-detial">{{item.text}}</view>

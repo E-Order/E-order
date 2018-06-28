@@ -1,7 +1,7 @@
 // pages/components/myorder/myorder.js
 const app = getApp()
 
-var config = require('../../../config')
+var config = require('../../../config.js')
 var util = require('../../../utils/util.js')
 
 Page({

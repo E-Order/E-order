@@ -9,97 +9,84 @@ Page({
    * 页面的初始数据
    */
   data: {
-    orderDetail:[],
-    orderItems:[],
-    amount:'0'
+    orderDetail: [],
+    orderItems: [],
+    amount: '0'
   },
 
-
   /**
-   * 生命周期函数--监听页面加载
+   * @method onLoad
+   * @desc 生命周期函数--监听页面加载
    */
   onLoad: function () {
-    var that = this
-    // var arr1 = new Array()
-    // var arr2 = new Array()
+    var that = this;
     wx.getStorage({
       key: 'pay_detail',
       success: function (res) {
-        console.log('res2', res.data)  // 获取所有食物的数据并存起来
-        // arr1 = res.data.cartfood
-        // arr2 = res.data.items
+        // 获取所有食物的数据并存起来
+        console.log('res2', res.data);
         that.setData({
-          // orderDetail: arr1,
-          // orderItems: arr2,
-          orderDetail: res.data.cartfood,
+          orderDetail: res.data.cartFood,
           orderItems: res.data.items,
           amount: res.data.amount
-        })
+        });
       }
-    })
+    });
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
+   * @method onReady
+   * @desc 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
-  },
+  onReady: function () {},
 
   /**
-   * 生命周期函数--监听页面显示
+   * @method onShow
+   * @desc 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    
-  },
+  onShow: function () {},
 
   /**
-   * 生命周期函数--监听页面隐藏
+   * @method onHide
+   * @desc 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-
-  },
+  onHide: function () {},
 
   /**
-   * 生命周期函数--监听页面卸载
+   * @method onUnload
+   * @desc 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-
-  },
+  onUnload: function () {},
 
   /**
-   * 页面相关事件处理函数--监听用户下拉动作
+   * @method onPullDownRefresh
+   * @desc 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
-  },
+  onPullDownRefresh: function () {},
 
   /**
-   * 页面上拉触底事件的处理函数
+   * @method onReachBottom
+   * @desc 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
+  onReachBottom: function () {},
 
   /**
-   * 用户点击右上角分享
+   * @method onShareAppMessage
+   * @desc 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function () {},
 
-  },
-
-  /* ********************
-  ** 提交订单 submitOrder
-  ** 
-  ** 参数 : options 表示该订单选择哪种付款方式
-  ** 返回值 : 
-  ******************** */
+  /**
+   * @method submitOrder
+   * @param {String} options 表示该订单选择哪种付款方式
+   * @desc 向服务器提交订单并完成相应的后续工作
+   */
   submitOrder: function(options) {
-    console.log("submit_sellerId:", app.globalData.sellerId)
-    console.log("submit_deskId:", app.globalData.tableNo)
-    console.log("submit_openid:", app.globalData.openId)
-    var that = this
-    console.log("JSON:", JSON.stringify(that.data.orderItems))
+    console.log('submit_sellerId:', app.globalData.sellerId);
+    console.log('submit_deskId:', app.globalData.tableNo);
+    console.log('submit_openid:', app.globalData.openId);
+    var that = this;
+    console.log('JSON:', JSON.stringify(that.data.orderItems));
     wx.request({
       url:config.service.creatOrderUrl,
       data: {
@@ -110,94 +97,79 @@ Page({
         'items': JSON.stringify(that.data.orderItems)
       },
       header: {
-        'content-type': 'application/x-www-form-urlencoded' // 默认值
+        'content-type': 'application/x-www-form-urlencoded'
       },
       method: 'POST',
       success: function(res) {
-        console.log(res.data)
-        if (options == "pay_offline") {
-          console.log("pay_offline")
-          that.offline_done()
-        } else if (options == "pay_online") {
-          console.log("pay_online")
-          that.online_done(res.data.data.orderId)
+        console.log(res.data);
+        if (options == 'pay_offline') {
+          console.log('pay_offline');
+          that.offlineOperate();
+        } else if (options == 'pay_online') {
+          console.log('pay_online');
+          that.onlineOperate(res.data.data.orderId);
         }
       }
-    })
+    });
   },
 
-  /* ********************
-  ** 线下支付 pay_by_money
-  ** 
-  ** 参数 : 
-  ** 返回值 : 
-  ******************** */
-  pay_by_money: function() {
-    this.submitOrder("pay_offline")
-    // this.offline_done()
+  /**
+   * @method payByMoney
+   * @desc 完成线下支付的工作
+   */
+  payByMoney: function() {
+    this.submitOrder('pay_offline');
   },
 
-  /* ********************
-  ** 线上支付 pay_online
-  ** 
-  ** 参数 : 
-  ** 返回值 : 
-  ******************** */
-  pay_online: function() {
-    this.submitOrder("pay_online")
-    // this.emptyCart()
-    // this.online_done()
+  /**
+   * @method payOnline
+   * @desc 完成线上支付的工作
+   */
+  payOnline: function() {
+    this.submitOrder('pay_online');
   },
 
-  /* ********************
-  ** 清空购物车 emptyCart
-  ** 
-  ** 参数 : 
-  ** 返回值 : 
-  ******************** */
+  /**
+   * @method emptyCart
+   * @desc 当用户提交订单后清空购物车的内容
+   */
   emptyCart: function() {
-    var that = this
+    var that = this;
     wx.getStorage({
-      key: 'foodnum',
+      key: 'foodNum',
       success: function (res) {
-        var array = res.data
-        var len = array.length
+        var array = res.data;
+        var len = array.length;
         for (var i = 0; i < len; i++) {
-          array[i].fill(0)
+          array[i].fill(0);
         }
-        // array.fill(0)
-        console.log('array(emptycart):', array)
         wx.setStorage({
-          key: 'foodnum',
+          key: 'foodNum',
           data: array,
-        })
+        });
       }
-    })
+    });
   },
 
-  /* ********************
-  ** 跳转到菜单页面 gotoIndex
-  ** 
-  ** 参数 : 
-  ** 返回值 : 
-  ******************** */
+  /**
+   * @method gotoIndex
+   * @desc 完成支付后自动跳转到菜单页面
+   */
   gotoIndex: function() {
     //跳转到菜单界面
-    console.log("跳转到菜单界面")
+    console.log('跳转到菜单界面');
     wx.switchTab({
       url: '../../index/index'　　
-    })
+    });
   },
 
-  /* ********************
-  ** 线下支付完成操作 offline_done
-  ** 
-  ** 参数 : 
-  ** 返回值 : 
-  ******************** */
-  offline_done: function() {
-    var that = this
-    this.emptyCart()
+  /**
+   * @method offlineOperate
+   * @desc 线下支付中，用户提交订单后进行的一系列操作(清空购物车, 订单提交成功信息和跳转到菜单界面)
+   */
+  offlineOperate: function() {
+    var that = this;
+    this.emptyCart();
     wx.showToast({
       title: '订单提交成功！',
       icon: 'success',
@@ -205,21 +177,20 @@ Page({
       mask: true,
       success: function() {
         setTimeout(function() {
-          wx.hideToast()
-          that.gotoIndex()
+          wx.hideToast();
+          that.gotoIndex();
         }, 1000)
       }
-    })
+    });
   },
 
-  /* ********************
-  ** 线上支付完成操作 online_done
-  ** 
-  ** 参数 : 
-  ** 返回值 : 
-  ******************** */
-  online_done: function(orderId) {
-    var that = this
+  /**
+   * @method onlineOperate
+   * @param orderId 提交订单后获得的订单号
+   * @desc 线上支付中，用户提交订单后进行的一系列操作(由于无法实现微信小程序的付款，只能模拟付款)
+   */
+  onlineOperate: function(orderId) {
+    var that = this;
     wx.showToast({
       title: '跳转到支付页面',
       icon: 'loading',
@@ -227,65 +198,95 @@ Page({
       mask: true,
       success: function() {
         setTimeout(function() {
-          wx.hideToast()
-        }, 3000)
+          wx.hideToast();
+        }, 3000);
         setTimeout(function() {
-          that.pay_done(orderId)
-        }, 1000)
+          that.simulateOnlinePay(orderId);
+        }, 1000);
       }
     })
   },
 
-  /* ********************
-  ** 线上支付提示 pay_done
-  ** 
-  ** 参数 : 
-  ** 返回值 : 
-  ******************** */
-  pay_done: function(orderId) {
-    var that = this
+  /**
+   * @method simulateOnlinePay
+   * @param orderId 提交订单后获得的订单号
+   * @desc 模拟线上付款
+   */
+  simulateOnlinePay: function(orderId) {
+    var that = this;
     wx.showModal({
       title: '确认支付',
       content: '模拟实现线上支付',
       success: function(res) {
         if (res.confirm) {
-          that.emptyCart()
-          that.onlinepay(orderId)
+          // 确定支付，清空购物车并告知服务器该订单线上付款成功，跳转到菜单页面
+          that.emptyCart();
+          that.onlinePaySuccess(orderId);
           wx.showToast({
             title: '支付成功！',
             icon: 'success',
             duration: 1000,
             success: function() {
               setTimeout(function() {
-                wx.hideToast()
-              }, 3000)
+                wx.hideToast();
+              }, 3000);
               setTimeout(function() {
-                that.gotoIndex()
-              }, 1000)
+                that.gotoIndex();
+              }, 1000);
             }
-          })
+          });
         } else {
+          // 取消支付，告知服务器该订单线上付款不成功，取消该订单，跳转到菜单页面
+          that.cancelOrder(orderId);
           wx.showToast({
             title: '取消支付',
             duration: 1000,
             success: function() {
               setTimeout(function() {
-                wx.hideToast()
-              }, 3000)
+                wx.hideToast();
+              }, 3000);
               setTimeout(function() {
-                that.gotoIndex()
-              }, 1000)
+                that.gotoIndex();
+              }, 1000);
             }
-          })
+          });
         }
       }
-    })
+    });
   },
 
-  onlinepay: function(orderId) {
-    console.log("orderId:", orderId)
+  /**
+   * @method onlinePaySuccess
+   * @param orderId 提交订单后获得的订单号
+   * @desc 告知服务器该订单线上付款成功
+   */
+  onlinePaySuccess: function(orderId) {
+    console.log('orderId:', orderId);
     wx.request({
-      url:config.service.payOrderUrl,
+      url: config.service.payOrderUrl,
+      data: {
+        'openid': app.globalData.openId,
+        'orderId': orderId,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      method: 'POST',
+      success: function(res) {
+        console.log(res.data);
+      }
+    });
+  },
+
+  /**
+   * @method cancelOrder
+   * @param orderId 提交订单后获得的订单号
+   * @desc 告知服务器取消该订单
+   */
+  cancelOrder: function(orderId) {
+    console.log('orderId:', orderId);
+    wx.request({
+      url:config.service.cancelOrderUrl,
       data: {
         'openid': app.globalData.openId,
         'orderId': orderId,
@@ -295,8 +296,8 @@ Page({
       },
       method: 'POST',
       success: function(res) {
-        console.log(res.data)
+        console.log(res.data);
       }
-    })
+    });
   }
 })

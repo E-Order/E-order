@@ -15,7 +15,7 @@
     </view>
  </scroll-view>
   <view class="check">
-    <button class="pay_by_money" hover-class="btn-hover" catchtap="pay_by_money">线下支付</button>
-    <button class="pay_online" hover-class="btn-hover" catchtap="pay_online">线上支付</button>
+    <button class="pay_by_money" hover-class="btn-hover" catchtap="payByMoney">线下支付</button>
+    <button class="pay_online" hover-class="btn-hover" catchtap="payOnline">线上支付</button>
   </view>
 </view>

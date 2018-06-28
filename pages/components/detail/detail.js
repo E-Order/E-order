@@ -1,19 +1,22 @@
-var app = getApp()
-Page({
+// detail.js
 
+var app = getApp()
+
+Page({
   /**
    * 页面的初始数据
    */
   data: {
-    food:null
+    food: null
   },
 
   /**
-   * 生命周期函数--监听页面加载
+   * @method onLoad
+   * @param options
+   * @desc 获取相应的菜品信息
    */
   onLoad: function (options) {
-    var that = this
-    // 列表
+    var that = this;
     wx.getStorage({
       key: 'navLeftItems',
       success: function(res) {
@@ -30,8 +33,7 @@ Page({
           }
         }
       },
-    })
-    
+    }); 
   },
 
   /**

@@ -10,16 +10,16 @@
   <view class="cart flex-wrap flex-direction-col" wx:if="{{!condition}}">
      <!--显示已选菜品-->
      <scroll-view class="food" scroll-y="true">
-     <block wx:for="{{cartfood}}">
+     <block wx:for="{{cartFood}}">
         <navigator url="../detail/detail?id={{item.id}}">
         <view class="dish flex-wrap flex-direction-row">
           <image class="image-style" src="{{item.icon}}" mode="aspectFill"></image>
           <view class="text-and-add">
             <view class="text-style"> <text>{{item.name}}</text></view>
             <view class="price-style"><text>￥{{item.price}}</text></view>
-            <image class="image-add" src="../../../images/+.png" catchtap="addfood" data-colindex="{{index}}"></image>
-            <text class="num">{{cartfoodnum[index]}}</text>
-            <image class="image-sub" src="../../../images/-.png" catchtap="subfood" data-colindex="{{index}}"></image>
+            <image class="image-add" src="../../../images/+.png" catchtap="addFood" data-colindex="{{index}}"></image>
+            <text class="num">{{cartFoodNum[index]}}</text>
+            <image class="image-sub" src="../../../images/-.png" catchtap="subFood" data-colindex="{{index}}"></image>
           </view>
         </view>
         </navigator>

@@ -5,242 +5,220 @@ Page({
     cartImg: '/images/cart-null.png',
     tipWords: '购物车空空如也',
     condition:true,
-    foodnum:[],  // 二维数组，每种食物类别的每种食物的数量，应该与index界面中的相同，
-    //但是我这里购物车中增加时没有更新它所以现在会有购物车界面与index界面不同步的bug
-    cartfood:[],  // 从index界面获取到数据后，如果食物数量不为0的话，填充到cartfood中
-    cartfoodnum:[],  // 每个cartfood中的食物对应的数量
+    // 二维数组，每种食物类别的每种食物的数量，应该与index界面中的相同
+    foodNum:[],
+    // 从index界面获取到数据后，如果食物数量不为0的话，填充到cartFood中
+    cartFood:[],
+    // 每个cartFood中的食物对应的数量
+    cartFoodNum:[],
     amount: '0'
   },
 
-  // 计算当前购物车下总金额
-  calTotal: function(e) {
+  /**
+   * @method calTotal
+   * @desc 计算当前购物车下总金额
+   */
+  calTotal: function() {
     var total = 0;
-    let kind = this.data.cartfood.length;
+    let kind = this.data.cartFood.length;
     for (var i = 0; i < kind; i++) {
-      total += this.data.cartfood[i].price * this.data.cartfoodnum[i];
-      // console.log("total", total)
+      total += this.data.cartFood[i].price * this.data.cartFoodNum[i];
     }
     this.setData({
       amount: total,
     })
   },
 
-  // 更改foodnum矩阵，使得能够实现与index页面的数据交互
-  updateFoodnum: function(e) {
-    let kind = this.data.cartfood.length;
-    var that = this
+  /**
+   * @method updateFoodNum
+   * @desc 更改foodNum矩阵，使得能够实现与index页面的数据交互
+   */
+  updateFoodNum: function() {
+    let kind = this.data.cartFood.length;
+    var that = this;
     wx.getStorage({
       key: 'navLeftItems',
       success: function (res) {
         let len1 = res.data.length;
         for (var i = 0; i < len1; i++) {
           let len2 = res.data[i].foods.length;
-          for (var j = 0; j < len2; j++)
-            that.data.foodnum[i][j] = 0;
+          for (var j = 0; j < len2; j++) {
+            that.data.foodNum[i][j] = 0;
+          }
         }
-        
         for (var k = 0; k < kind; k++) {
           for (var i = 0; i < len1; i++) {
             let len2 = res.data[i].foods.length;
-            for (var j = 0; j < len2; j++)
-              if (that.data.cartfood[k].id == res.data[i].foods[j].id) {
-                that.data.foodnum[i][j] = that.data.cartfoodnum[k];
+            for (var j = 0; j < len2; j++) {
+              if (that.data.cartFood[k].id == res.data[i].foods[j].id) {
+                that.data.foodNum[i][j] = that.data.cartFoodNum[k];
               }
+            }
           }
         }
       }
     })
   },
 
-  onLoad: function() {
-    
-  },
+  /**
+   * @method onLoad
+   */
+  onLoad: function() {},
 
+  /**
+   * @method onShow
+   * @desc 赋值foodNum，cartFood和cartFoodNum
+   */
   onShow:function() {
-    var that = this
-    var tempfoodnum = new Array();
-    var foodincart = new Array();
-    var foodnumincart = new Array();
-    //从index界面获取数据，并填充cartfood，同样赋值时很麻烦，希望能解决
+    var that = this;
+    var tempFoodNum = [];
+    var foodInCart = [];
+    var foodNumInCart = [];
+    // 获取index页面的foodNum矩阵
     wx.getStorage({
-      key: 'foodnum',
+      key: 'foodNum',
       success: function (res) {
         console.log(res.data)
         that.setData({
-          foodnum: res.data
+          foodNum: res.data
         })
-        let len1 = res.data.length
-        for (var i = 0; i < len1; i++) {
-          tempfoodnum[i] = new Array();
-          let len2 = res.data[i].length;
-          for (var j = 0; j < len2; j++) {
-            tempfoodnum[i][j] = res.data[i][j]
-          }
-        }
+        tempFoodNum = res.data;
       }
-    })
-    console.log("tempfoodnum", tempfoodnum)
+    });
+    console.log("tempFoodNum", tempFoodNum);
+    // 赋值cartFood和cartFoodNum
     wx.getStorage({
       key: 'navLeftItems',
       success: function (res) {
-        let len1 = tempfoodnum.length;
+        let len1 = tempFoodNum.length;
         var index = 0;
         for (var i = 0; i < len1; i++) {
-          let len2 = tempfoodnum.length;
+          let len2 = tempFoodNum.length;
           for (var j = 0; j < len2; j++) {
-            if (tempfoodnum[i][j] > 0) {
-              foodincart[index] = res.data[i].foods[j];
-              foodnumincart[index] = tempfoodnum[i][j];
+            if (tempFoodNum[i][j] > 0) {
+              foodInCart[index] = res.data[i].foods[j];
+              foodNumInCart[index] = tempFoodNum[i][j];
               index++;
             }
           }
         }
         that.setData({
-          cartfood: foodincart,
-          cartfoodnum: foodnumincart
-        })
-        that.calTotal()
+          cartFood: foodInCart,
+          cartFoodNum: foodNumInCart
+        });
+        that.calTotal();
         if (index > 0) {
           that.setData({
             condition: false
-          })
+          });
         } else {
           that.setData({
             condition: true
-          })
+          });
         }
       }
-    })
-    console.log("foodincart", foodincart)
-    console.log("foodnumincart", foodnumincart)
-    console.log("total", this.amount)
+    });
+    console.log("foodInCart", foodInCart);
+    console.log("foodNumInCart", foodNumInCart);
+    console.log("total", this.amount);
   },
 
+  /**
+   * @method onHide
+   * @desc 存储foodNum矩阵
+   */
   onHide:function() {
-    
-    //this.updateFoodnum()
-    console.log("foonumincart", this.data.foodnum)
+    console.log("foodNum", this.data.foodNum);
     wx.setStorage({
-      key: 'foodnum',
-      data: this.data.foodnum,
-    })
+      key: 'foodNum',
+      data: this.data.foodNum,
+    });
   },
 
-
-  //给food添加一个type，或者根据食物的id的第一位来判断，我把食物id的第一位设为了与type相同的值
-  addfood: function (e) {
+  /**
+   * @method addFood
+   * @param e
+   * @desc 增加购物车中该食物的数量, 更新foodNum矩阵和更新当前购物车总额
+   */
+  addFood: function (e) {
     var that = this;
     let col = parseInt(e.target.dataset.colindex);
-    var array_num = new Array();
-    let len1 = this.data.cartfoodnum.length;
-    for (var i = 0; i < len1; i++) {
-      array_num[i] = this.data.cartfoodnum[i];
-    }
-    array_num[col]++;
+    // var arr = [];
+    // let len1 = this.data.cartFoodNum.length;
+    // for (var i = 0; i < len1; i++) {
+    //   arr[i] = this.data.cartFoodNum[i];
+    // }
+    var arr = this.data.cartFoodNum;
+    arr[col]++;
     that.setData({
-      cartfoodnum: array_num,
-    })
-    console.log("array_numincart",array_num)
-    console.log("addfoodnum", this.data.foodnum)
-    this.updateFoodnum();
-    this.calTotal()
+      cartFoodNum: arr,
+    });
+    console.log("arrincart",arr);
+    console.log("addFoodNum", this.data.foodNum);
+    this.updateFoodNum();
+    this.calTotal();
   },
 
-  subfood: function (e) {
+  /**
+   * @method subFood
+   * @param e
+   * @desc 减少购物车中该食物的数量, 更新foodNum矩阵和更新当前购物车总额
+   */
+  subFood: function (e) {
     var that = this;
     let col = parseInt(e.target.dataset.colindex);
-    var array_num = new Array();
-    var arrayfood = new Array();
-    let len1 = this.data.cartfoodnum.length;
-    var index = 0;
-    for (var i = 0; i < len1; i++) {
-      var temp = this.data.cartfoodnum[i];
-      if (i == col) {
-       temp--;
-      }
-      if (temp != 0) {
-        arrayfood[index] = this.data.cartfood[i];
-        array_num[index] = temp;
-        index++;
-      } 
+    // var arr = [];
+    // var arrayfood = [];
+    // let len1 = this.data.cartFoodNum.length;
+    // var index = 0;
+    // for (var i = 0; i < len1; i++) {
+    //   var temp = this.data.cartFoodNum[i];
+    //   if (i == col) {
+    //    temp--;
+    //   }
+    //   if (temp != 0) {
+    //     arrayfood[index] = this.data.cartFood[i];
+    //     arr[index] = temp;
+    //     index++;
+    //   } 
+    // }
+    var arr = this.data.cartFoodNum;
+    var arrFood = this.data.cartFood;
+    arr[col]--;
+    if (arr[col] == 0) {
+      arr.splice(col, 1);
+      arrFood.splice(col, 1);
     }
-    if (arrayfood.length == 0) {
+    if (arrFood.length == 0) {
       that.setData({
         condition:true
       })
     }
     that.setData({
-      cartfoodnum: array_num,
-      cartfood: arrayfood
+      cartFoodNum: arr,
+      cartFood: arrFood
     })
-    this.updateFoodnum();
+    this.updateFoodNum();
     this.calTotal()
   },
 
-  /* ********************
-  ** 提交订单 pay(未完成，API未理解)
-  ** 用户确定所需菜品及数量之后向后台提交订单
-  ** 参数 : 无
-  ** 返回值 : 无
-  ******************** */
+  /**
+   * @method pay
+   * @desc 跳转到pay页面并储存相应的订单信息
+   */
   pay: function() {
-    /*var openid = app.globalData.openId
-    console.log("openid(cart):", openid)
-    // var openid = "ew3euwhd7sjw9diwkq"
-    var arr = this.makeOrder()
-    var that = this
-    wx.request({
-      url:'https://private-b4689-ordermeal.apiary-mock.com/eorder/buyer/order/create',
-      data: {
-        'deskid': app.globalData.tableNo,
-        'openid': openid,
-        'amount': that.data.amount,
-        'items': arr
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      method: 'POST',
-      success: function(res) {
-       // console.log(res.data.code)
-        console.log('deskid', app.globalData.tableNo)
-        console.log('openid', openid)
-        console.log('amount', that.data.amount)
-        console.log('food', arr)
-      }
-    })*/
-    // do something
-    // 传递购物车信息给支付界面
-    var openid = app.globalData.openId
-    console.log("openid(cart):", openid)
-    var arr = this.makeOrder()
-    var that = this
-    console.log("items", arr)
-    console.log("amount", that.data.amount)
+    var arr = this.makeOrder();
+    var that = this;
+    console.log("items", arr);
+    console.log("amount", that.data.amount);
     wx.setStorage({
       key: 'pay_detail',
       data: {
-        // 'deskid': app.globalData.tableNo,
-        // 'openid': openid,
-        'cartfood': that.data.cartfood,
+        'cartFood': that.data.cartFood,
         'amount': that.data.amount,
         'items': arr
       },
-    })
-    // 清空购物车与点餐界面
-    // var that = this;
-    // var array_num = new Array();
-    // let len1 = this.data.cartfoodnum.length;
-    // for (var i = 0; i < len1; i++) {
-    //   array_num[i] = 0;
-    // }
-    // that.setData({
-    //   cartfoodnum: array_num,
-    // })
-    // console.log("array_numincart", array_num)
-    // console.log("addfoodnum", this.data.foodnum)
-    // this.updateFoodnum();
-
+    });
     //跳转到支付界面
     console.log("跳转到支付界面");
     wx.navigateTo({
@@ -248,19 +226,18 @@ Page({
     })
   },
 
-  /* ********************
-  ** 构造订单的菜品的相应数据 makeOrder
-  ** 用户确定所需菜品及数量之后向后台提交订单
-  ** 参数 : 无
-  ** 返回值 : arr 数组
-  ******************** */
+  /**
+   * @method makeOrder
+   * @returns arr
+   * @desc 生成订单中菜品信息的数组
+   */
   makeOrder: function() {
-    var arr = new Array()
-    var len = this.data.cartfood.length
+    var arr = [];
+    var len = this.data.cartFood.length;
     for (var i = 0; i < len; i++) {
-      arr[i] = {"productId": this.data.cartfood[i].id, "productQuantity": this.data.cartfoodnum[i]}
+      arr[i] = {"productId": this.data.cartFood[i].id, "productQuantity": this.data.cartFoodNum[i]};
     }
-    console.log(arr)
-    return arr
+    console.log(arr);
+    return arr;
   },
 })

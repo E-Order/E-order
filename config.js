@@ -3,7 +3,6 @@
 */
 
 // 服务器负责买家端的主地址
-// var host = 'https://private-b4689-ordermeal.apiary-mock.com/eorder/buyer'
 var host = 'http://123.207.7.251:8080/eorder'
 
 var config = {
@@ -11,7 +10,6 @@ var config = {
 		host,
 		
 		// 获取openid
-		// getOpenIdUrl: 'http://eorder1.natapp1.cc/eorder/weixin/start',
 		getOpenIdUrl: `${host}/weixin/start`,
 
 		// 获取菜单信息
