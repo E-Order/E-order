@@ -6,7 +6,7 @@
         "pages/components/detail/detail",
         "pages/components/myorder/myorder",
         "pages/components/pay/pay",
-        "pages/components/Error/Error"
+        "pages/components/error/error"
     ],
     "window": {
         "backgroundTextStyle": "white",

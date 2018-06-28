@@ -43,7 +43,7 @@ Page({
         // 不是通过扫描二维码进入小程序，跳转到error页面，强制扫码
         console.log("不是扫码获得商家ID和桌号");
         wx.redirectTo({
-          url:'../components/Error/Error'
+          url:'../components/error/error'
         });
       }
     }
