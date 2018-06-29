@@ -1,56 +1,44 @@
 //app.js
 
-var config = require('./config')
+var config = require('./config');
 
 App({
 
+  /**
+   * @method onLoad
+   */
   onLaunch: function () {
     // 展示本地存储能力
     // 调取API从本地缓存中获取数据
-    console.log('App Launch')
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    console.log('App Launch');
+    var logs = wx.getStorageSync('logs') || [];
+    logs.unshift(Date.now());
+    wx.setStorageSync('logs', logs);
   },
 
+  /**
+   * @method onShow
+   */
   onShow: function () {
-    console.log('onShow')
+    console.log('onShow');
   },
 
+  /**
+   * @method onHide
+   */
   onHide: function () {
-    console.log('onHide')
+    console.log('onHide');
   },
 
+  /**
+   * @method getUserInfo
+   * @desc 获取用户信息
+   */
   getUserInfo: function(cb) {
     var that = this;
     if (this.globalData.userInfo) {
-      typeof cd == "function" && cb(this.globalData.userInfo)
+      typeof cd == "function" && cb(this.globalData.userInfo);
     } else {
-      // 调用登录接口
-      // wx.login({
-      //   success: function(res) {
-      //     console.log('res.code', res.code);
-      //     wx.request({
-      //       url: config.service.getOpenIdUrl,
-      //       data:{
-      //         code: res.code,
-      //       },
-      //       method:'GET',
-      //       success: function (res1) {
-      //         console.log('openid',res1.data.openid) //获取openid  
-      //         that.globalData.openId = res1.data.openid
-      //       }
-      //     })
-      //     wx.getUserInfo({
-      //       success: function(res) {
-      //         that.globalData.userInfo = res.userInfo;
-      //         console.log("userInfo:", res.userInfo);
-      //         typeof cb == "function" && cb(that.globalData.userInfo)
-      //       }
-      //     })
-      //   }
-      // })
-
       // 获取用户信息
       wx.getSetting({
         success: res => {
@@ -59,23 +47,26 @@ App({
             wx.getUserInfo({
               success: res => {
                 // 可以将 res 发送给后台解码出 unionId
-                that.globalData.userInfo = res.userInfo
+                that.globalData.userInfo = res.userInfo;
                 // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
                 // 所以此处加入 callback 以防止这种情况
                 if (that.userInfoReadyCallback) {
-                  that.userInfoReadyCallback(res)
+                  that.userInfoReadyCallback(res);
                 }
               }
-            })
+            });
           }
         }
-      })
+      });
     }
   },
 
-  // 请求后台服务器获取OpenId
+  /**
+   * @method getOpenId
+   * @desc 请求服务器获得该用户的openId
+   */
   getOpenId: function() {
-    var that = this
+    var that = this;
     wx.login({
       success: function(res) {
         if (res.code) {
@@ -87,27 +78,26 @@ App({
             },
             method:'GET',
             success: function (result) {
-              console.log(result.data.openid)
-              that.globalData.openId = result.data.openid
+              console.log(result.data.openid);
+              that.globalData.openId = result.data.openid;
             },
             fail: function(result) {
-              console.log('获取用户登录态失败！' + result.errMsg)
+              console.log('获取用户登录态失败！' + result.errMsg);
             }
-          })
+          });
         } else {
-          console.log('获取用户登录态失败！' + res.errMsg)
+          console.log('获取用户登录态失败！' + res.errMsg);
         }
       }
-    })
+    });
   },
 
   globalData: {
-    appid:'wx3cf64998f8d0620d',
-    secret:'45309d94006144ae9bbfc4eeeec71a9f',
     userInfo: null,
-    // openId: '1234567890987654321',
     openId: null,
-    tableNo: null, // 通过扫码获得的桌号
+    // 通过扫码获得的桌号
+    tableNo: null,
+     // 通过扫码获得的商家ID
     sellerId: null,
   }
 })
