@@ -78,7 +78,7 @@ Page({
         'openid': app.globalData.openId,
         'sellerId': app.globalData.sellerId,
         'page': 0,
-        'size': 10
+        'size': 50
       },
       header: {
         'content-type': 'application/json'
@@ -179,7 +179,6 @@ Page({
       var index = -1;
       for (var i = 0; i < len; i++) {
         if (this.data.temporderDetail[i].updateTime > max) {
-          console.log("i (updateTime > max):", i);
           index = i;
           max = this.data.temporderDetail[i].updateTime;
         }
