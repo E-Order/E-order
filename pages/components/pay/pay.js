@@ -237,7 +237,8 @@ Page({
           });
         } else {
           // 取消支付，告知服务器该订单线上付款不成功，取消该订单，跳转到菜单页面
-          that.cancelOrder(orderId);
+          that.emptyCart();
+          // that.cancelOrder(orderId);
           wx.showToast({
             title: '取消支付',
             duration: 1000,
