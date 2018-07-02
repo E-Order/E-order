@@ -82,6 +82,7 @@ Page({
         that.setData({
           foodNum: res.data
         })
+        console.log("FoodNum", that.data.foodNum);
         tempFoodNum = res.data;
       }
     });
@@ -93,7 +94,8 @@ Page({
         let len1 = tempFoodNum.length;
         var index = 0;
         for (var i = 0; i < len1; i++) {
-          let len2 = tempFoodNum.length;
+          let len2 = tempFoodNum[i].length;
+          console.log("len2:", len2);
           for (var j = 0; j < len2; j++) {
             if (tempFoodNum[i][j] > 0) {
               foodInCart[index] = res.data[i].foods[j];
@@ -106,6 +108,8 @@ Page({
           cartFood: foodInCart,
           cartFoodNum: foodNumInCart
         });
+        console.log("cartFood", that.data.cartFood);
+        console.log("cartFoodNum", that.data.cartFoodNum);
         that.calTotal();
         if (index > 0) {
           that.setData({
